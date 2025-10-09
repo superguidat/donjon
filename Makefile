@@ -1,16 +1,18 @@
-NAME =			murasaki
+NAME =			donjon_master
 
-SRC =			$(wildcard ./*.cpp)
+SRC =			$(wildcard ./src/*.cpp)
 
 OBJS =			$(SRC:.cpp=.o)
 
-INCLUDE =		-I./../include
+INCLUDE =		-I././include -I$(HOME)/.froot/include/
 
-CC =			g++
+CC =			b++
 
-FLAGS =			-W -Wall -Wextra -Wno-write-strings -g
+FLAGS=			-W -Wall -Wextra -g #-O3 -ffast-math -march=native # -g # -Wno-write-strings 
 
-LDFLAGS =		-L./ -lpolimorphism_parametric -L$(GTEST_DIR)/lib -lgtest -lgtest_main -lgcov
+LDFLAGS =		-L./ -L$(GTEST_DIR)/lib -g
+
+LDFLAGS +=		$(LAPINFLAGS)
 
 all: 			$(NAME)
 
