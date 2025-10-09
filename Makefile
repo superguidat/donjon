@@ -1,9 +1,20 @@
+<<<<<<< HEAD
 NAME =			donjon_master
 
 SRC =			$(wildcard ./src/*.cpp)
+=======
+OUT =libDungeon.a
 
-OBJS =			$(SRC:.cpp=.o)
+INCLUDE=-I./include/
+SRC =$(shell find src/ -name "*.c")
+OBJ =$(SRC:.c=.o)
+CC = gcc
+>>>>>>> 9325605 (changement Incroyable!)
 
+#flags "-g pour debug"
+CFLAGS = $(INCLUDE) -Wall -Wextra -std=gnu11
+
+<<<<<<< HEAD
 INCLUDE =		-I././include -I$(HOME)/.froot/include/
 
 CC =			b++
@@ -27,11 +38,18 @@ ar:$(OBJS)
 			ar rc $(NAME).a $(OBJS)
 g:
 			gdb --arg ./$(NAME)
-clean:
-			rm -f  *~ *.o
-fclean: clean
-			rm -f $(NAME)
-re: fclean all
+=======
+all: $(OUT)
 
-tree: fclean
-			tree
+$(OUT): $(OBJ)
+	ar crs $(OUT) $(OBJ)
+
+>>>>>>> 9325605 (changement Incroyable!)
+clean:
+	@rm -f $(OBJ)
+	@rm -f $(shell find ./ -name "*~")
+
+fclean: clean
+	@rm -f $(OUT)
+
+re: fclean all
