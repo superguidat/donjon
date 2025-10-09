@@ -1,55 +1,65 @@
-<<<<<<< HEAD
-NAME =			donjon_master
+# ------------------------
+# Projet Dungeon Master
+# ------------------------
 
-SRC =			$(wildcard ./src/*.cpp)
-=======
-OUT =libDungeon.a
+NAME        = dungeon_master
 
-INCLUDE=-I./include/
-SRC =$(shell find src/ -name "*.c")
-OBJ =$(SRC:.c=.o)
-CC = gcc
->>>>>>> 9325605 (changement Incroyable!)
+# --- Sources (tous les .cpp + glad.c) ---
+SRC         = $(wildcard src/*.cpp) src/glad.c
+OBJS        = $(SRC:.cpp=.o)
+OBJS        := $(OBJS:.c=.o)  # convert glad.c -> glad.o
 
-#flags "-g pour debug"
-CFLAGS = $(INCLUDE) -Wall -Wextra -std=gnu11
+# --- Includes ---
+INCLUDE     = -I./include -I$(HOME)/.froot/include
 
-<<<<<<< HEAD
-INCLUDE =		-I././include -I$(HOME)/.froot/include/
+# --- Compilateur ---
+CC          = g++
+CXXFLAGS    = -std=c++23 -Wall -Wextra -W -g
 
-CC =			b++
+# --- Librairies ---
+SFML_LIBS   = -llapin-dbg -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lX11
+OPENGL_LIBS = -lGL -lGLU -ldl -lpthread
+GLFW_LIBS   = -lglfw
+OPENCV_LIBS = -lopencv_imgproc -lopencv_highgui -lopencv_objdetect -lopencv_video -lopencv_videoio -lopencv_core
+OTHER_LIBS  = -lstdc++ -lm -lavcall -lusb -ludev
 
-FLAGS=			-W -Wall -Wextra -g #-O3 -ffast-math -march=native # -g # -Wno-write-strings 
+# --- LDFLAGS ---
+LDFLAGS     = $(SFML_LIBS) $(OPENGL_LIBS) $(GLFW_LIBS) $(OPENCV_LIBS) $(OTHER_LIBS)
 
-LDFLAGS =		-L./ -L$(GTEST_DIR)/lib -g
+# ------------------------
+# Règles
+# ------------------------
 
-LDFLAGS +=		$(LAPINFLAGS)
+all: $(NAME)
 
-all: 			$(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 
-test: 			all
-			./$(NAME)
+# Compilation des .cpp et .c
+%.o: %.cpp
+	$(CC) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
-$(NAME):$(OBJS)
-			$(CC) $(OBJS) $(LDFLAGS) -o $(NAME)
-.cpp.o:
-			$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
-ar:$(OBJS)
-			ar rc $(NAME).a $(OBJS)
-g:
-			gdb --arg ./$(NAME)
-=======
-all: $(OUT)
+%.o: %.c
+	$(CC) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
-$(OUT): $(OBJ)
-	ar crs $(OUT) $(OBJ)
+# Exécuter
+run: all
+	./$(NAME)
 
->>>>>>> 9325605 (changement Incroyable!)
+# Debug
+g: all
+	gdb --args ./$(NAME)
+
+# Nettoyage
 clean:
-	@rm -f $(OBJ)
-	@rm -f $(shell find ./ -name "*~")
+	find . -name "*.o" -delete
+	find . -name "*~" -delete
 
 fclean: clean
-	@rm -f $(OUT)
+	rm -f $(NAME) $(NAME).a
 
 re: fclean all
+
+# Arbre du projet
+tree: fclean
+	tree
