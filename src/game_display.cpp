@@ -9,19 +9,14 @@ t_bunny_response        game_display(t_prog				*prog)
   t_zposition		pos_cam;
   t_zposition		dir_cam;
   t_zposition		vec_cam;
-  double		tile_size = rand() %30 + 20;
+  double		tile_size = 30 + 20;
 
   bunny_push_gl_states(&prog->win->buffer);
-  pos_cam.x = prog->pos.x;
-  pos_cam.y = prog->pos.y;
-  pos_cam.z = 0;
-  dir_cam.x = (prog->pos.x + cos(prog->rot));
-  dir_cam.y = (prog->pos.y + sin(prog->rot));
-  dir_cam.z = (0);
-  vec_cam.x = (0);
-  vec_cam.y = (0);
-  vec_cam.z = (1);
-  move_cam(pos_cam, dir_cam, vec_cam);
+  prog->me.setPos_cam(prog->pos);
+  prog->me.setDir_cam((t_zposition){.x = (prog->pos.x + cos(prog->rot)),
+				   .y = (prog->pos.y + sin(prog->rot)),
+				   .z = 0});
+  move_cam(prog->me.getPos_cam(), prog->me.getDir_cam(), prog->me.getVec_cam());
 
   col.full = BLACK;
   clear_img(col);

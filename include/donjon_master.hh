@@ -4,6 +4,7 @@
 #include			<GL/gl.h>
 #include			<GL/glu.h>
 #include			<lapin.h>
+#include			<tile.hh>
 
 #define				WIDTH		800
 #define				HEIGHT		600
@@ -28,6 +29,24 @@ struct				t_prog;
 
 namespace			ef
 {
+  class				Joueur
+  {
+  public :
+    Joueur(void);
+    ~Joueur(){;};// destructeur
+
+    double			getPv()				{return pv;}
+    t_zposition			getPos_cam()			{return pos_cam;}
+    t_zposition			getDir_cam()			{return dir_cam;}
+    t_zposition			getVec_cam()			{return vec_cam;}
+
+
+  private:
+    double			pv;
+    t_zposition			pos_cam;
+    t_zposition			dir_cam;
+    t_zposition			vec_cam;
+  };
   class				Projectile
   {
   public :
@@ -113,23 +132,41 @@ namespace			ef
     int16_t			getT()			{return t;}
     double			getPv()			{return pv;}
     ssize_t			getLast_shot()		{return last_shot;}
+    t_zposition			getPos_cam()		{return pos_cam;}
+    t_zposition			getDir_cam()		{return dir_cam;}
+    t_zposition			getVec_cam()		{return vec_cam;}
 
-    void			setR(int32_t		_r)	{r = _r;}
-    void			setI(int32_t		_i)	{i = _i;}
-    void			setX(double		_x)	{x = _x;}
-    void			setY(double		_y)	{y = _y;}
-    void			setDest(double		_y,
-					double		_x)	{y_dest = _y;
-								x_dest = _x;}
-    void			setV(int32_t		_v)	{v = _v;}
-    void			setT(int16_t		_t)	{t = _t;}
-    void			setPv(int16_t		_pv)	{pv = _pv;}
-    void			setLast_shot(ssize_t	_last_shot){last_shot = _last_shot;};
-    void			setMove_type(int8_t	_move_type){move_type = _move_type;};
+    void			setR(int32_t			_r)		{r = _r;}
+    void			setI(int32_t			_i)		{i = _i;}
+    void			setX(double			_x)		{x = _x;}
+    void			setY(double			_y)		{y = _y;}
+    void			setDest(double			_y,
+					double			_x)		{y_dest = _y;
+										x_dest = _x;}
+    void			setV(int32_t			_v)		{v = _v;}
+    void			setT(int16_t			_t)		{t = _t;}
+    void			setPv(int16_t			_pv)		{pv = _pv;}
+    void			setLast_shot(ssize_t		_last_shot)	{last_shot = _last_shot;};
+    void			setMove_type(int8_t		_move_type)	{move_type = _move_type;};
+    void			setPos_cam(t_zposition		_pos_cam)	{pos_cam = _pos_cam;}
+    void			setDir_cam(t_zposition		_dir_cam)	{dir_cam = _dir_cam;}
+    void			setVec_cam(t_zposition		_vec_cam)	{vec_cam = _vec_cam;}
 
-    double			appendX(double		_x)	{x += _x; return x;};
-    double			appendY(double		_y)	{y += _y; return y;};
-    double			appendV(double		_v)	{v += _v; return v;};
+    double			appendX(double			_x)		{x += _x; return x;};
+    double			appendY(double			_y)		{y += _y; return y;};
+    double			appendV(double			_v)		{v += _v; return v;};
+    t_zposition			appendPos_cam(t_zposition	_pos_cam)	{pos_cam.x += _pos_cam.x;
+										pos_cam.y += _pos_cam.y;
+										pos_cam.z += _pos_cam.z;
+										return pos_cam;}
+    t_zposition			appendDir_cam(t_zposition	_dir_cam)	{dir_cam.x += _dir_cam.x;
+										dir_cam.y += _dir_cam.y;
+										dir_cam.z += _dir_cam.z;
+										return dir_cam;}
+    t_zposition			appendVec_cam(t_zposition	_vec_cam)	{vec_cam.x += _vec_cam.x;
+										vec_cam.y += _vec_cam.y;
+										vec_cam.z += _vec_cam.z;
+										return vec_cam;}
     double			appendPv(double			_pv){pv += _pv; return pv;};
 
     bool			Collide(const Unit	&u,
@@ -155,6 +192,9 @@ namespace			ef
     double			y;
     double			x_dest;
     double			y_dest;
+    t_zposition			pos_cam;
+    t_zposition			dir_cam;
+    t_zposition			vec_cam;
     double			v;
     uint8_t			pos[1000];
     int16_t			t;
@@ -171,6 +211,7 @@ struct				t_prog
   uint32_t			**ref;
   t_bunny_font			*ascii;
   t_bunny_music			*music[2];
+  Tile				tiles[100*100];
   ef::Unit			me;
   ef::Unit			units[256];
   ef::Objet			objets[256];
@@ -179,7 +220,7 @@ struct				t_prog
   int16_t			nb_units;
   double			rot;
   double			tilt;
-  t_bunny_accurate_position	pos;
+  t_zposition			pos;
 };
 
 void				clear_img(t_bunny_color		&color);

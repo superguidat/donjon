@@ -32,10 +32,14 @@ t_bunny_response                game_loop(t_prog			*prog)
     }
 
   if (bunny_get_keyboard()[BKS_PAGEUP])
-    prog->tilt += 0.02;
+    prog->pos.z -= 0.02;
   else if (bunny_get_keyboard()[BKS_PAGEDOWN])
-    prog->tilt -= 0.02;
+    prog->pos.z += 0.02;
   else
-    prog->tilt *= 0.97;
+    prog->pos.z *= 0.95;
+  if (bunny_get_keyboard()[BKS_SPACE] )
+    ;
+  else
+    ;
    return (GO_ON);
 }
