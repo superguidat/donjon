@@ -20,12 +20,12 @@ class Floor;
   floor();
  private:
   int number;
-  double height;
+  double max_height;
   //x and y size;
   int x;
   int y;
   int rooms;
-  int locked_rooms;
+  int special_rooms;
   
 }
 

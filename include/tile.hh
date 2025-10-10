@@ -19,6 +19,7 @@ class Tile;
   tile();
  private:
   int type; // 0 null/outside of play range , 1 floor-tile
+  t_bunny_position pos;
   double base_height;
   double points_of_elevation[9]; // base_height + 9 pique de + ou - hauteur. = {0} pour avoir aucun changement
 }
