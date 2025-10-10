@@ -5,6 +5,9 @@
 #include			<GL/glu.h>
 #include			<lapin.h>
 
+#define				WIDTH		800
+#define				HEIGHT		600
+
 struct				t_zposition
 {
   double			x;
@@ -68,18 +71,19 @@ namespace			ef
     Objet(void);
     ~Objet();// destructeur
 
-    int32_t			getI(){return (i);}
-    double			getX(){return (x);}
-    double			getY(){return (y);}
-    double			getDegat(){return degat;}
-    t_bunny_position		getPos(){return (t_bunny_position){.x = (int)x, .y = (int)y};}
+    int32_t			getI()			{return (i);}
+    double			getX()			{return (x);}
+    double			getY()			{return (y);}
+    double			getDegat()		{return degat;}
+    t_bunny_position		getPos()		{return (t_bunny_position)
+							{.x = (int)x, .y = (int)y};}
 
-    void			setI(int32_t		_i){i = _i;}
-    void			setX(double		_x){x = _x;}
-    void			setY(double		_y){y = _y;}
-    void			setDegat(double		_degat){degat = _degat;}
+    void			setI(int32_t		_i)	{i = _i;}
+    void			setX(double		_x)	{x = _x;}
+    void			setY(double		_y)	{y = _y;}
+    void			setDegat(double		_degat)	{degat = _degat;}
     void			setPos(double		_x,
-				       double		_y){x = _x; y = _y;}
+				       double		_y)	{x = _x; y = _y;}
 
     void			draw(t_prog		*pro);
   private:
@@ -95,44 +99,47 @@ namespace			ef
     ~Unit();// destructeur
     //void			operator=(const Block		&other);
 
-    int32_t			getR(){return (r);};
-    int32_t			getI(){return (i);};
-    double			getX(){return (x);};
-    double			getY(){return (y);};
-    double			getV(){return (v);};
-    t_bunny_position		getPos(){return (t_bunny_position){.x = (int)x, .y = (int)y};};
-    t_bunny_position		getPosDest(){return (t_bunny_position){.x = (int)x_dest, .y = (int)y_dest};}
-    int8_t			getMove_type(){return move_type;}
-    int8_t			getDir(){t--; return pos[t-1];}
-    int16_t			getT(){return t;}
-    double			getPv(){return pv;}
-    ssize_t			getLast_shot(){return last_shot;}
+    int32_t			getR()			{return (r);}
+    int32_t			getI()			{return (i);}
+    double			getX()			{return (x);}
+    double			getY()			{return (y);}
+    double			getV()			{return (v);}
+    t_bunny_position		getPos()		{return (t_bunny_position)
+							{.x = (int)x, .y = (int)y};}
+    t_bunny_position		getPosDest()		{return (t_bunny_position)
+							{.x = (int)x_dest, .y = (int)y_dest};}
+    int8_t			getMove_type()		{return move_type;}
+    int8_t			getDir()		{t--; return pos[t-1];}
+    int16_t			getT()			{return t;}
+    double			getPv()			{return pv;}
+    ssize_t			getLast_shot()		{return last_shot;}
 
-    void			setR(int32_t				_r){r = _r;};
-    void			setI(int32_t				_i){i = _i;};
-    void			setX(double				_x){x = _x;};
-    void			setY(double				_y){y = _y;};
-    void			setDest(double				_y,
-					double				_x){y_dest = _y; x_dest = _x;};
-    void			setV(int32_t				_v){v = _v;};
-    void			setT(int16_t				_t){t = _t;};
-    void			setPv(int16_t				_pv){pv = _pv;};
-    void			setLast_shot(ssize_t				_last_shot){last_shot = _last_shot;};
-    void			setMove_type(int8_t				_move_type){move_type = _move_type;};
+    void			setR(int32_t		_r)	{r = _r;}
+    void			setI(int32_t		_i)	{i = _i;}
+    void			setX(double		_x)	{x = _x;}
+    void			setY(double		_y)	{y = _y;}
+    void			setDest(double		_y,
+					double		_x)	{y_dest = _y;
+								x_dest = _x;}
+    void			setV(int32_t		_v)	{v = _v;}
+    void			setT(int16_t		_t)	{t = _t;}
+    void			setPv(int16_t		_pv)	{pv = _pv;}
+    void			setLast_shot(ssize_t	_last_shot){last_shot = _last_shot;};
+    void			setMove_type(int8_t	_move_type){move_type = _move_type;};
 
-    double			appendX(double				_x){x += _x; return x;};
-    double			appendY(double				_y){y += _y; return y;};
-    double			appendV(double				_v){v += _v; return v;};
-    double			appendPv(double				_pv){pv += _pv; return pv;};
+    double			appendX(double		_x)	{x += _x; return x;};
+    double			appendY(double		_y)	{y += _y; return y;};
+    double			appendV(double		_v)	{v += _v; return v;};
+    double			appendPv(double			_pv){pv += _pv; return pv;};
 
-    bool			Collide(const Unit			&u,
-					bool				next_move = false);
-    void			move(double				_x,
-				     double				_y,
-				     double				_a,
-				     uint32_t				_color,
-				     int32_t				move,
-				     t_prog				&pro);
+    bool			Collide(const Unit	&u,
+					bool		next_move = false);
+    void			move(double		_x,
+				     double		_y,
+				     double		_a,
+				     uint32_t		_color,
+				     int32_t		move,
+				     t_prog		&pro);
 
     void			SetColor(uint32_t c) { color = c; }
     unsigned int		GetColor(void) const { return color; }
@@ -170,6 +177,18 @@ struct				t_prog
   ef::Projectile		project[1000];
   int16_t			nb_project;
   int16_t			nb_units;
+  double			rot;
+  double			tilt;
+  t_bunny_accurate_position	pos;
 };
+
+void				clear_img(t_bunny_color		&color);
+
+void				move_cam(t_zposition		pos_cam,
+					 t_zposition		dir_cam,
+					 t_zposition		vec_cam);
+
+void				set_triangle(t_zposition	*pos,
+					     t_bunny_color	*colo);
 
 #endif//                        __DONJON_MASTER_HH__

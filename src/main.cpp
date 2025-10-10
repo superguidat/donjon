@@ -4,43 +4,28 @@ extern "C" {
   bunny_declare_context(game);
 }
 
-void		move_cam(t_zposition		pos_cam,
-			 t_zposition		dir_cam)
+t_prog			*charge_prog()
 {
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(45.0, 800.0 / 600.0, 0.1, 100.0);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
+  t_prog		*pro;
 
-  gluLookAt(pos_cam.x, pos_cam.y, pos_cam.z,   // position caméra
-	    dir_cam.x, dir_cam.y, dir_cam.z,   // regard vers
-	    0.0, 1.0, 0.0);  // up vector
+  if ((pro = (t_prog*) malloc( sizeof(t_prog) ) ) == NULL)
+    return NULL;
+  if ((pro->win = bunny_start(WIDTH, HEIGHT, false, "DemoGL")) == NULL)
+    {
+      free(pro);
+      return NULL;
+    }
+  return pro;
 }
-
-/*
-void processInput(GLFWwindow* window)
-{
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-      glfwSetWindowShouldClose(window,true);
-    if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-      glViewport(100, 0, 800, 600);
-}
-*/
 
 int		main(void)
 {
-  double r, g, b;
-  t_zposition		zpo[2];
-  t_prog	*pro = (t_prog*)malloc(sizeof(t_prog));
+  t_prog		*pro;
 
-  r = 1;
-  g = 1;
-  b = 1;
 
-  pro->win = bunny_start(800, 600, false, "DemoGL");
-
-  bunny_push_gl_states(&pro->win->buffer);
+  if ((pro = charge_prog()) == NULL)
+    return -1;
+  /*  bunny_push_gl_states(&pro->win->buffer);
 
 
   gluLookAt(0.0, 0.0, 5.0,   // position caméra
@@ -50,43 +35,69 @@ int		main(void)
   double x = 0;
   while (1)
     {
+      colo[0].full = RED;
+      colo[1].full = GREEN;
+      colo[2].full = BLUE;
+
+      pos[0].x = -0.5;
+      pos[0].y = -0.5;
+      pos[0].z = -10;
+
+      pos[1].x = 0.5;
+      pos[1].y = -0.5;
+      pos[1].z = 5;
+
+      pos[2].x = 0;
+      pos[2].y = 0.5;
+      pos[2].z = 5;
+
       zpo[0].x = cos(x)*50;
       zpo[0].y = 0;
       zpo[0].z = sin(x)*50;
+
       zpo[1].x = 0;
       zpo[1].y = 0;
       zpo[1].z = 0;
-      glClearColor(0, 0, 0, 1.f);
-      glClear(GL_COLOR_BUFFER_BIT);
 
+      color.argb[0] = 0;
+      color.argb[1] = 0;
+      color.argb[2] = 0;
+      color.argb[3] = 1;
+
+      clear_img(color);
       move_cam(zpo[0], zpo[1]);
-      /*
-      glMatrixMode(GL_PROJECTION);
-      glLoadIdentity();
-      gluPerspective(45.0, 800.0 / 600.0, 0.1, 100.0);
-      glMatrixMode(GL_MODELVIEW);
-      glLoadIdentity();
-
-      gluLookAt(cos(x) * 50, 0, sin(x) * 50,   // position caméra
-		0.0, 0.0, 0.0,   // regard vers
-		0.0, 1.0, 0.0);  // up vector
-      */
-
-      glBegin(GL_TRIANGLES);
-      glColor3f(r, 0.f, 0.f); glVertex3f(-0.5f, -0.5f, -10);
-      glColor3f(0.f, g, 0.f); glVertex3f( 0.5f, -0.5f, 5);
-      glColor3f(0.f, 0.f, b); glVertex3f( 0.f,  0.5f, 5);
+      set_triangle(pos, colo);
 
       for (int i = 0; i < 10000 * 3; ++i)
 	{
-	  glColor4f((rand() % 1000 / 1000.0),
-		    (rand() % 1000 / 1000.0),
-		    (rand() % 1000 / 1000.0),
-		    (rand() % 1000 / 1000.0)
-		    );
-	  glVertex3f(rand() % 100 / 10.0 - 5,
-		     rand() % 100 / 10.0 - 5,
-		     -rand() % 100 / 10.0 - 5);
+	  colo[0].argb[0] = (rand() % 255);
+	  colo[0].argb[1] = (rand() % 255);
+	  colo[0].argb[2] = (rand() % 255);
+	  colo[0].argb[3] = (rand() % 255);
+
+	  pos[0].x = rand() % 100 / 10 - 5;
+	  pos[0].y = rand() % 100 / 10 - 5;
+	  pos[0].z = -rand() % 100 / 10 - 5;
+
+	  colo[1].argb[0] = (rand() % 255);
+	  colo[1].argb[1] = (rand() % 255);
+	  colo[1].argb[2] = (rand() % 255);
+	  colo[1].argb[3] = (rand() % 255);
+
+	  pos[1].x = rand() % 100 / 10 - 5;
+	  pos[1].y = rand() % 100 / 10 - 5;
+	  pos[1].z = -rand() % 100 / 10 - 5;
+
+	  colo[2].argb[0] = (rand() % 255);
+	  colo[2].argb[1] = (rand() % 255);
+	  colo[2].argb[2] = (rand() % 255);
+	  colo[2].argb[3] = (rand() % 255);
+
+	  pos[2].x = rand() % 100 / 10 - 5;
+	  pos[2].y = rand() % 100 / 10 - 5;
+	  pos[2].z = -rand() % 100 / 10 - 5;
+
+	  set_triangle(pos, colo);
 	}
       glEnd();
 
@@ -95,11 +106,16 @@ int		main(void)
       bunny_display(pro->win);
       x += 0.5;
       //      bunny_usleep(1e5);
-    }
+      }*/
+  pro->pos.x = -5;
+  pro->pos.y = 0;
+  pro->tilt = 0;
+  pro->rot = 0;
   bunny_set_key_response(game_key);
   bunny_set_entering_context_response(game_entering);
   bunny_set_loop_main_function(game_loop);
   bunny_set_display_function(game_display);
-  bunny_loop(pro->win, 60, &pro);
+  bunny_loop(pro->win, 60, pro);
   bunny_stop(pro->win);
+  free(pro);
 }
