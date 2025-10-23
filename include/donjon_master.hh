@@ -5,16 +5,13 @@
 #include			<GL/glu.h>
 #include			<lapin.h>
 #include			<tile.hh>
+#include			<SFML/Graphics.hpp>
 
 #define				WIDTH		800
 #define				HEIGHT		600
-
-struct				t_zposition
-{
-  double			x;
-  double			y;
-  double			z;
-};
+#define				GRAVITY		9.8
+#define				JUMP_COOLDOWN	0.5
+#define				JUMP_FORCE	5.0
 
 struct				t_map
 {
@@ -136,6 +133,13 @@ namespace			ef
     t_zposition			getDir_cam()		{return dir_cam;}
     t_zposition			getVec_cam()		{return vec_cam;}
 
+    double			getLast_jump_time()	{return last_jump_time;}
+    double			getJump_cooldown()	{return jump_cooldown;}
+    double			getJump_force()		{return jump_force;}
+    double			getGravity()		{return gravity;}
+    bool			getIs_jumping()		{return is_jumping;}
+    double			getVertical_speed()	{return vertical_speed;}
+
     void			setR(int32_t			_r)		{r = _r;}
     void			setI(int32_t			_i)		{i = _i;}
     void			setX(double			_x)		{x = _x;}
@@ -151,6 +155,12 @@ namespace			ef
     void			setPos_cam(t_zposition		_pos_cam)	{pos_cam = _pos_cam;}
     void			setDir_cam(t_zposition		_dir_cam)	{dir_cam = _dir_cam;}
     void			setVec_cam(t_zposition		_vec_cam)	{vec_cam = _vec_cam;}
+    void			setLast_jump_time(double		_last_jump_time)		{last_jump_time = _last_jump_time;}
+    void			setJump_cooldown(double			_jump_cooldown)		{jump_cooldown = _jump_cooldown;}
+    void			setJump_force(double			_jump_force)		{jump_force = _jump_force;}
+     void			setGravity(double			_gravity)		{gravity = _gravity;}
+     void			setIs_jumping(double			_is_jumping)		{is_jumping = _is_jumping;}
+     void			setVertical_speed(double			_vertical_speed)		{vertical_speed = _vertical_speed;}
 
     double			appendX(double			_x)		{x += _x; return x;};
     double			appendY(double			_y)		{y += _y; return y;};
@@ -168,7 +178,6 @@ namespace			ef
 										vec_cam.z += _vec_cam.z;
 										return vec_cam;}
     double			appendPv(double			_pv){pv += _pv; return pv;};
-
     bool			Collide(const Unit	&u,
 					bool		next_move = false);
     void			move(double		_x,
@@ -181,9 +190,16 @@ namespace			ef
     void			SetColor(uint32_t c) { color = c; }
     unsigned int		GetColor(void) const { return color; }
 
+    bool			check_jump();
+    void			jump(double				current_time,
+				     double				dd);
+    void			update_jump(double			deltaTime,
+					    double			dd);
+
     t_bunny_position		pathfinding(t_map			*map,
 					    t_bunny_pixelarray		&pix,
 					    t_bunny_position		destination);
+    bool			check_me_tile(Tile			&tuil);
 
   private:
     int32_t			r;
@@ -202,6 +218,12 @@ namespace			ef
     uint32_t			color = 0;
     int8_t			move_type = 0;
     ssize_t			last_shot;
+    double			last_jump_time = -1.0;
+    double			jump_cooldown = JUMP_COOLDOWN;
+    double			jump_force = 5.0;
+    double			gravity = GRAVITY;
+    bool			is_jumping = false;
+    double			vertical_speed = 0.0;
   };
 };
 
@@ -212,6 +234,9 @@ struct				t_prog
   t_bunny_font			*ascii;
   t_bunny_music			*music[2];
   Tile				tiles[100*100];
+  Tile				tiles_sup[100*100];
+  int32_t			width;
+  int32_t			height;
   ef::Unit			me;
   ef::Unit			units[256];
   ef::Objet			objets[256];
@@ -221,7 +246,42 @@ struct				t_prog
   double			rot;
   double			tilt;
   t_zposition			pos;
+  GLuint			textureID[10];
+  sf::Time			dt;
+  sf::Clock			clock;
+  sf::Clock			deltaClock;
+  bool				deb;
 };
+
+struct				t_coord
+{
+  t_prog			&pro;
+  t_zposition			*pos;
+  t_zposition			*p;
+  int32_t			x;
+  int32_t			y;
+  int32_t			tile_size;
+};
+
+void				mouvement(t_prog		&pro);
+
+void				init_triangle_HB(t_zposition    *posf,
+						 Tile		&tuil,
+						 Tile		&tuil2);
+
+void				init_triangle_RL(t_zposition    *posf,
+						 Tile		&tuil,
+						 Tile		&tuil2);
+
+void				init_triangle_LR(t_zposition    *pos,
+						 t_zposition    *posi);
+
+void				init_tiles(t_prog		*pro);
+void				init_tiles_sup(t_prog		*pro);
+
+t_bunny_response		charge_texture(const char	*file_path,
+					       t_prog		*pro,
+					       int32_t		i);
 
 void				clear_img(t_bunny_color		&color);
 
@@ -231,5 +291,31 @@ void				move_cam(t_zposition		pos_cam,
 
 void				set_triangle(t_zposition	*pos,
 					     t_bunny_color	*colo);
+void				set_triangle_text(t_zposition	*pos,
+						  GLuint	textureID);
+
+void				set_coord(t_coord               coo,
+					  int8_t		sup);
+
+void				set_carre(t_zposition		pos,
+					  t_prog		&pro,
+					  int32_t		tile_size,
+					  int16_t		id);
+
+void				set_zcarre(t_zposition		*pos,
+					   t_prog		&pro,
+					   int16_t		id);
+
+void				plafond(t_prog			&pro,
+					int32_t			x,
+					int32_t			y);
+
+void				sol(t_prog			&pro,
+				    int32_t			x,
+				    int32_t			y,
+				    t_zposition			*pos);
+
+void				saut_graviter(t_prog		&pro);
+
 
 #endif//                        __DONJON_MASTER_HH__

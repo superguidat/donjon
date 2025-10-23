@@ -4,56 +4,42 @@ extern "C"
 t_bunny_response        game_display(t_prog				*prog)
 {
   t_bunny_color		col;
-  t_bunny_color		color[3];
-  t_zposition		pos[3];
-  t_zposition		pos_cam;
-  t_zposition		dir_cam;
-  t_zposition		vec_cam;
-  double		tile_size = 30 + 20;
+  t_zposition		pos[30];
+  t_zposition		posm;
 
-  bunny_push_gl_states(&prog->win->buffer);
-  prog->me.setPos_cam(prog->pos);
-  prog->me.setDir_cam((t_zposition){.x = (prog->pos.x + cos(prog->rot)),
-				   .y = (prog->pos.y + sin(prog->rot)),
-				   .z = 0});
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  posm = prog->pos;
+  if (!prog->deb)
+    posm.z = prog->me.getPos_cam().z;
+  prog->me.setPos_cam(posm);
+  if (!prog->deb)
+    prog->me.setDir_cam((t_zposition){.x = (prog->pos.x + cos(prog->rot)),
+				      .y = (prog->pos.y + sin(prog->rot)),
+				      .z = prog->me.getPos_cam().z});
+  else
+    prog->me.setDir_cam((t_zposition){.x = (prog->pos.x + cos(prog->rot)),
+				      .y = (prog->pos.y + sin(prog->rot)),
+				      .z = 249});
   move_cam(prog->me.getPos_cam(), prog->me.getDir_cam(), prog->me.getVec_cam());
 
   col.full = BLACK;
   clear_img(col);
 
-  color[0].full = RED;
-  color[1].full = RED;
-  color[2].full = RED;
-  pos[0] = {.x = -tile_size, .y = -tile_size, .z = +5};
-  pos[1] = {.x = -tile_size, .y = tile_size, .z = +5};
-  pos[2] = {.x = tile_size, .y = -tile_size, .z = +5};
-  set_triangle(pos, color);
-  color[0].full = RED;
-  color[1].full = RED;
-  color[2].full = RED;
-  pos[0] = {.x = tile_size, .y = tile_size, .z = +5};
-  pos[1] = {.x = -tile_size, .y = tile_size, .z = +5};
-  pos[2] = {.x = tile_size, .y = -tile_size, .z = +5};
-  set_triangle(pos, color);
+  for (int32_t y = -(prog->height / 2); y < (prog->height / 2); y++)
+    {
+      for (int32_t x = -(prog->width / 2); x < (prog->width / 2); x++)
+	{
 
-  color[0].full = BLUE;
-  color[1].full = BLUE;
-  color[2].full = BLUE;
-  pos[0] = {.x = -tile_size, .y = -tile_size, .z = -5};
-  pos[1] = {.x = -tile_size, .y = tile_size, .z = -5};
-  pos[2] = {.x = tile_size, .y = -tile_size, .z = -5};
-  set_triangle(pos, color);
+	  //haut
+	  if (!prog->deb)
+	    plafond(*prog, x, y);
 
-  color[0].full = BLUE;
-  color[1].full = BLUE;
-  color[2].full = BLUE;
-  pos[0] = {.x = tile_size, .y = tile_size, .z = -5};
-  pos[1] = {.x = -tile_size, .y = tile_size, .z = -5};
-  pos[2] = {.x = tile_size, .y = -tile_size, .z = -5};
-  set_triangle(pos, color);
+	  //bas
+	  sol(*prog, x, y, pos);
+	}
+    }
 
-  glEnd();
-  bunny_pop_gl_states(&prog->win->buffer);
   bunny_display(prog->win);
   return (GO_ON);
 }

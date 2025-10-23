@@ -6,7 +6,7 @@ void			move_cam(t_zposition		pos_cam,
 {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(45.0, WIDTH / HEIGHT, 0.1, 100.0);
+  gluPerspective(45.0, WIDTH / HEIGHT, 0.1, 1000.0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
