@@ -13,6 +13,8 @@
 #ifndef		__tile_hh__
 #define		__tile_hh__
 
+#include <lapin.h>
+
 #define		SOUS_POINT			9
 #define		TILE_SIZE			36
 
