@@ -5,7 +5,8 @@
 NAME        = dungeon_master
 
 # --- Sources (tous les .cpp + glad.c) ---
-SRC         = $(wildcard src/*.cpp) src/glad.c
+SRC         = 	$(wildcard src/*.cpp) 	\
+		src/glad.c
 OBJS        = $(SRC:.cpp=.o)
 OBJS        := $(OBJS:.c=.o)  # convert glad.c -> glad.o
 
@@ -17,7 +18,7 @@ CC          = g++
 CXXFLAGS    = -std=c++23 -Wall -Wextra -W -g
 
 # --- Librairies ---
-SFML_LIBS   = -L$(HOME)/.froot/lib/ -llapin -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lX11
+SFML_LIBS   = -L$(HOME)/.froot/lib/ -llapin -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lX11 
 OPENGL_LIBS = -lGL -lGLU -ldl -lpthread
 GLFW_LIBS   = -lglfw
 OPENCV_LIBS = -lopencv_imgproc -lopencv_highgui -lopencv_objdetect -lopencv_video -lopencv_videoio -lopencv_core

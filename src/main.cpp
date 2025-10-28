@@ -39,7 +39,7 @@ int		main(int32_t		ac,
 	  pro->pos.z = 250;
 	}
     }
-  std::cout << "compile avec :: ./dungeon_master d\nPour avoir la vue de haut" << std::endl;
+  std::cout << "execute avec : ./dungeon_master d\nPour avoir la vue de haut" << std::endl;
   bunny_set_key_response(game_key);
   bunny_set_entering_context_response(game_entering);
   bunny_set_loop_main_function(game_loop);

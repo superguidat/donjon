@@ -7,11 +7,12 @@
 #include			<tile.hh>
 #include			<SFML/Graphics.hpp>
 
-#define				WIDTH		800
-#define				HEIGHT		600
-#define				GRAVITY		9.8
-#define				JUMP_COOLDOWN	0.5
-#define				JUMP_FORCE	5.0
+#define				WIDTH				800
+#define				HEIGHT				600
+#define				GRAVITY				9.8
+#define				JUMP_COOLDOWN			0.5
+#define				JUMP_FORCE			5.0
+#define				LIMITE_FRANCHISSEMENT		3
 
 struct				t_map
 {
@@ -26,49 +27,31 @@ struct				t_prog;
 
 namespace			ef
 {
-  class				Joueur
-  {
-  public :
-    Joueur(void);
-    ~Joueur(){;};// destructeur
-
-    double			getPv()				{return pv;}
-    t_zposition			getPos_cam()			{return pos_cam;}
-    t_zposition			getDir_cam()			{return dir_cam;}
-    t_zposition			getVec_cam()			{return vec_cam;}
-
-
-  private:
-    double			pv;
-    t_zposition			pos_cam;
-    t_zposition			dir_cam;
-    t_zposition			vec_cam;
-  };
   class				Projectile
   {
   public :
     Projectile(void);
     ~Projectile();// destructeur
 
-    int32_t			getR(){return (r);}
-    int32_t			getI(){return (i);}
-    double			getX(){return (x);}
-    double			getY(){return (y);}
-    double			getDegat(){return degat;}
-    double			getV(){return (v);}
-    t_bunny_position		getPos(){return (t_bunny_position){.x = (int)x, .y = (int)y};}
-    t_bunny_position		getPosDest(){return (t_bunny_position){.x = (int)x_dest, .y = (int)y_dest};}
+    int32_t			getR()			{return (r);}
+    int32_t			getI()			{return (i);}
+    double			getX()			{return (x);}
+    double			getY()			{return (y);}
+    double			getDegat()		{return degat;}
+    double			getV()			{return (v);}
+    t_bunny_position		getPos()		{return (t_bunny_position){.x = (int)x, .y = (int)y};}
+    t_bunny_position		getPosDest()		{return (t_bunny_position){.x = (int)x_dest, .y = (int)y_dest};}
 
-    void			setR(int32_t		_r){r = _r;}
-    void			setI(int32_t		_i){i = _i;}
-    void			setX(double		_x){x = _x;}
-    void			setY(double		_y){y = _y;}
-    void			setDegat(double		_degat){degat = _degat;}
-    void			setV(double		_v){v = _v;}
+    void			setR(int32_t		_r)	{r = _r;}
+    void			setI(int32_t		_i)	{i = _i;}
+    void			setX(double		_x)	{x = _x;}
+    void			setY(double		_y)	{y = _y;}
+    void			setDegat(double		_degat)	{degat = _degat;}
+    void			setV(double		_v)	{v = _v;}
     void			setPos(double		_x,
-				       double		_y){x = _x; y = _y;}
+				       double		_y)	{x = _x; y = _y;}
     void			setPosDest(double	_x ,
-					   double	 _y){x_dest = _x; y_dest = _y;}
+					   double	_y)	{x_dest = _x; y_dest = _y;}
 
     void			draw(t_prog		*pro);
   private:
@@ -155,12 +138,12 @@ namespace			ef
     void			setPos_cam(t_zposition		_pos_cam)	{pos_cam = _pos_cam;}
     void			setDir_cam(t_zposition		_dir_cam)	{dir_cam = _dir_cam;}
     void			setVec_cam(t_zposition		_vec_cam)	{vec_cam = _vec_cam;}
-    void			setLast_jump_time(double		_last_jump_time)		{last_jump_time = _last_jump_time;}
-    void			setJump_cooldown(double			_jump_cooldown)		{jump_cooldown = _jump_cooldown;}
-    void			setJump_force(double			_jump_force)		{jump_force = _jump_force;}
-     void			setGravity(double			_gravity)		{gravity = _gravity;}
-     void			setIs_jumping(double			_is_jumping)		{is_jumping = _is_jumping;}
-     void			setVertical_speed(double			_vertical_speed)		{vertical_speed = _vertical_speed;}
+    void			setLast_jump_time(double	_last_jump_time){last_jump_time = _last_jump_time;}
+    void			setJump_cooldown(double		_jump_cooldown)	{jump_cooldown = _jump_cooldown;}
+    void			setJump_force(double		_jump_force)	{jump_force = _jump_force;}
+     void			setGravity(double		_gravity)	{gravity = _gravity;}
+     void			setIs_jumping(double		_is_jumping)	{is_jumping = _is_jumping;}
+     void			setVertical_speed(double	_vertical_speed){vertical_speed = _vertical_speed;}
 
     double			appendX(double			_x)		{x += _x; return x;};
     double			appendY(double			_y)		{y += _y; return y;};
@@ -177,29 +160,29 @@ namespace			ef
 										vec_cam.y += _vec_cam.y;
 										vec_cam.z += _vec_cam.z;
 										return vec_cam;}
-    double			appendPv(double			_pv){pv += _pv; return pv;};
-    bool			Collide(const Unit	&u,
-					bool		next_move = false);
-    void			move(double		_x,
-				     double		_y,
-				     double		_a,
-				     uint32_t		_color,
-				     int32_t		move,
-				     t_prog		&pro);
+    double			appendPv(double			_pv)		{pv += _pv; return pv;};
+    bool			Collide(const Unit		&u,
+					bool			next_move = false);
+    void			move(double			_x,
+				     double			_y,
+				     double			_a,
+				     uint32_t			_color,
+				     int32_t			move,
+				     t_prog			&pro);
 
-    void			SetColor(uint32_t c) { color = c; }
-    unsigned int		GetColor(void) const { return color; }
+    void			SetColor(uint32_t		c) { color = c; }
+    unsigned int		GetColor(void)			const { return color; }
 
     bool			check_jump();
-    void			jump(double				current_time,
-				     double				dd);
-    void			update_jump(double			deltaTime,
-					    double			dd);
+    void			jump(double			current_time,
+				     double			dd);
+    void			update_jump(double		deltaTime,
+					    double		dd);
 
-    t_bunny_position		pathfinding(t_map			*map,
-					    t_bunny_pixelarray		&pix,
-					    t_bunny_position		destination);
-    bool			check_me_tile(Tile			&tuil);
+    t_bunny_position		pathfinding(t_map		*map,
+					    t_bunny_pixelarray	&pix,
+					    t_bunny_position	destination);
+    bool			check_me_tile(Tile		&tuil);
 
   private:
     int32_t			r;
@@ -262,6 +245,13 @@ struct				t_coord
   int32_t			y;
   int32_t			tile_size;
 };
+
+bool				check_me_first(t_zposition	&pos,
+					       Tile		&tuil);
+
+bool				collision_me(t_prog		&pro,
+					     double		x,
+					     double		y);
 
 void				mouvement(t_prog		&pro);
 

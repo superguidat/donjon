@@ -30,12 +30,8 @@ t_bunny_response        game_display(t_prog				*prog)
     {
       for (int32_t x = -(prog->width / 2); x < (prog->width / 2); x++)
 	{
-
-	  //haut
 	  if (!prog->deb)
 	    plafond(*prog, x, y);
-
-	  //bas
 	  sol(*prog, x, y, pos);
 	}
     }
