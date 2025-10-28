@@ -12,8 +12,9 @@
 
 #ifndef __tile_hh_
 #define __tile_hh_
+#include <lapin.h>
 
-class Tile;
+class tile
 {
  public:
   tile();
@@ -22,5 +23,6 @@ class Tile;
   t_bunny_position pos;
   double base_height;
   double points_of_elevation[9]; // base_height + 9 pique de + ou - hauteur. = {0} pour avoir aucun changement
-}
+};
 
+#endif//	 __TILE_HH__
