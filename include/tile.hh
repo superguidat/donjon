@@ -29,7 +29,7 @@ class Tile
 {
  public:
   Tile(void);
-  ~Tile(void){;};
+  ~Tile(void);
 
   double		getPoint(int8_t		point)		{return (points_of_elevation[point]);}
   int32_t		getType()				{return (type);}

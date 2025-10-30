@@ -8,11 +8,10 @@ t_prog			*charge_prog()
 {
   t_prog		*pro;
 
-  if ((pro = (t_prog*) malloc( sizeof(t_prog) ) ) == NULL)
-    return NULL;
+  pro = new t_prog;
   if ((pro->win = bunny_start_style(WIDTH, HEIGHT, (t_bunny_window_style)(DEFAULT_WIN_STYLE | DEPTH_BUFFER), "Dungeon Master")) == NULL)
     {
-      free(pro);
+      delete pro;
       return NULL;
     }
   return pro;
