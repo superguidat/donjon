@@ -57,81 +57,73 @@ int clamp(int		val,
   return (val);
 }
 
-void Floor::subdivide(room parent_room)
+//#define KEEP_TMP_SHAPE
+#ifdef KEEP_TMP_SHAPE
+# define TST(a)
+#else
+# define TST(a) a
+#endif
+
+void Floor::subdivide(room parent_room, int max)
 {
-  room subdiv1;
-  room subdiv2;
+  room subdiv1(parent_room.minsize);
+  room subdiv2(parent_room.minsize);
   int checkx;
   int checky;
   int R;
-  R= rand()%2;
-  if (parent_room.isMinimal())
+
+  if ((!parent_room.isXSplitable() && !parent_room.isYSplitable())
+      || parent_room.isMinimal() || max == 0)
     {
-      rooms.push_back(parent_room);
+      TST(rooms.push_back(parent_room));
       return;
     }
 
-  checky = clamp(rand() % (parent_room.corner[3].y - parent_room.corner[0].y), 10, 100) + parent_room.corner[0].y;
-  checkx = clamp(rand() % (parent_room.corner[3].x - parent_room.corner[0].x), 10, 100) + parent_room.corner[0].x;
+  // Remplacer ca par un découpage variant entre 25 et 75% de la dimension considéré comme découpable
+  double d = ((rand() % 51) + 25.0) / 100.0;
+  checky = d * (parent_room.corner[3].y - parent_room.corner[0].y);
+  checkx = d * (parent_room.corner[3].x - parent_room.corner[0].x);
+  // Une dimension découpable doit pouvoir etre découpée, meme si l'autre dimension n'est pas découpable.
 
-  if(R)
+  if (checky <= checkx && parent_room.isYSplitable())
+    R = 2;
+  else if (checkx >= checky && parent_room.isXSplitable())
+    R = 0;
+  else
     {
-      subdiv1.corner[0].x = checkx;
-      subdiv1.corner[1].x = parent_room.corner[1].x;
-      subdiv1.corner[2].x = checkx;
-      subdiv1.corner[3].x = parent_room.corner[3].x;
-      subdiv1.corner[0].y = parent_room.corner[0].y;
-      subdiv1.corner[1].y = parent_room.corner[1].y;
-      subdiv1.corner[2].y = parent_room.corner[2].y;
-      subdiv1.corner[3].y = parent_room.corner[3].y;
+      // R = rand() % 2 ? 2 : 0;
+      R = 0;
+    }
+  checky += parent_room.corner[0].y;
+  checkx += parent_room.corner[0].x;
+  if(R > 1)
+    {
+      subdiv2 = subdiv1.splitX(parent_room, checkx);
+      // Subdivise horizontalement?
 
-      subdiv2.corner[0].x = parent_room.corner[0].x;
-      subdiv2.corner[1].x = checkx;
-      subdiv2.corner[2].x = parent_room.corner[2].x;
-      subdiv2.corner[3].x = checkx;
-      subdiv2.corner[0].y = parent_room.corner[0].y;
-      subdiv2.corner[1].y = parent_room.corner[1].y;
-      subdiv2.corner[2].y = parent_room.corner[2].y;
-      subdiv2.corner[3].y = parent_room.corner[3].y;
-
-      if(roomcheck(roomarea(subdiv1)))
+      TST(if(roomcheck(roomarea(subdiv1))))
 	rooms.push_back(subdiv1);
-      else
-	subdivide(subdiv1);
+      TST(else)
+	subdivide(subdiv1, max - 1);
 
-      if(roomcheck(roomarea(subdiv2)))
+      TST(if(roomcheck(roomarea(subdiv2))))
 	rooms.push_back(subdiv2);
-      else
-	subdivide(subdiv2);
+      TST(else)
+	subdivide(subdiv2, max - 1);
     }
   else
     {
-      subdiv1.corner[0].x = parent_room.corner[0].x;
-      subdiv1.corner[1].x = parent_room.corner[1].x;
-      subdiv1.corner[2].x = parent_room.corner[2].x;
-      subdiv1.corner[3].x = parent_room.corner[3].x;
-      subdiv1.corner[0].y = checky;
-      subdiv1.corner[1].y = checky;
-      subdiv1.corner[2].y = parent_room.corner[2].y;
-      subdiv1.corner[3].y = parent_room.corner[3].y;
+      // Subdivise verticalement?
+      subdiv2 = subdiv1.splitY(parent_room, checky);
 
-      subdiv2.corner[0].x = parent_room.corner[0].x;
-      subdiv2.corner[1].x = parent_room.corner[1].x;
-      subdiv2.corner[2].x = parent_room.corner[2].x;
-      subdiv2.corner[3].x = parent_room.corner[3].x;
-      subdiv2.corner[0].y = parent_room.corner[0].y;
-      subdiv2.corner[1].y = parent_room.corner[1].y;
-      subdiv2.corner[2].y = checky;
-      subdiv2.corner[3].y = checky;
+      TST(if(roomcheck(roomarea(subdiv1))))
+      rooms.push_back(subdiv1);
+      TST(else)
+	subdivide(subdiv1, max - 1);
 
-      if(roomcheck(roomarea(subdiv1)))
-	rooms.push_back(subdiv1);
-      else
-	subdivide(subdiv1);
-
-      if(roomcheck(roomarea(subdiv2)))
+      TST(if(roomcheck(roomarea(subdiv2))))
 	rooms.push_back(subdiv2);
-      else
-	subdivide(subdiv2);
+      TST(else)
+	subdivide(subdiv2, max - 1);
     }
 }

@@ -28,7 +28,7 @@ class Floor
   int y;
   std::vector<room> rooms;
   int special_rooms;
-  void subdivide(room parent_room);
+  void subdivide(room parent_room, int max);
 };
 
 #endif//	 __FLOOR_HH__

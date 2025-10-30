@@ -6,7 +6,7 @@ NAME = lib$(OUT).a
 LAPINLINKS=
 LIB=-lgtest_main -lgtest -lpthread -l$(OUT) # -lgcov
 INCLUDE=-I../include/
-SRC =$(wildcard ./*.cpp) $(wildcard ./*/*.cpp)
+SRC =$(wildcard ./*.cpp) $(wildcard ./*/*.cpp) 
 OBJ =$(SRC:.cpp=.o)
 CPP = b++
 

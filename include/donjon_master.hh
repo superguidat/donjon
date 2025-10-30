@@ -5,6 +5,8 @@
 #include			<GL/glu.h>
 #include			<lapin.h>
 #include			<tile.hh>
+#include			<floor.hh>
+#include			<room.hh>
 #include			<SFML/Graphics.hpp>
 
 #define				WIDTH				800

@@ -37,11 +37,14 @@ void			saut_graviter(t_prog		&pro)
   double		current_time;
   double		deltaTime;
 
+  cami = INT_MAX;
+  dd = INT_MAX;
   current_time = pro.clock.getElapsedTime().asSeconds();
   pro.dt = pro.deltaClock.restart();
   deltaTime = pro.dt.asSeconds();
   search_tile_me(pro, cam, dd, cami);
-  if (!pro.me.getIs_jumping())
+  if (!pro.me.getIs_jumping()
+      && cami != INT_MAX)
     {
       limit_gravity(cam.z, dd, cami);
       pro.me.setPos_cam(cam);
@@ -50,5 +53,6 @@ void			saut_graviter(t_prog		&pro)
     {
       pro.me.jump(current_time, dd);
     }
-  pro.me.update_jump(deltaTime, dd);
+  if (dd != INT_MAX)
+    pro.me.update_jump(deltaTime, dd);
 }
