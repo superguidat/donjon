@@ -39,7 +39,7 @@ t_bunny_response		game_entering(t_prog	*pro)
   t_bunny_position Rcorner[5];
   Floor mfloor;
   uint32_t tab[pro->width * pro->height];
-  room tempFloorroom(0, 50, 0, 50, 7);
+  room tempFloorroom(0, pro->width, 0, pro->height, 7);
   int i;
   int j;
   t_bunny_color color[2] = { {.full = RED}, {.full = BLUE} };
@@ -71,20 +71,29 @@ t_bunny_response		game_entering(t_prog	*pro)
       i++;
     }
   for (int32_t y = 0; y < pro->height; y ++)
-    for (int32_t x = 0; x < pro->width; x ++)
-      {
-	double h = 0;
-	if (tab[y*pro->width + x] == 1)
-	  h = 9;
-	else
-	  h = 0;
-	for (int32_t li = 0; li < 9; li ++)
-	  {
-	    int r = rand()%5;
-	    pro->tiles[y*pro->width+x].setPoint(li, h);
-	    pro->tiles_sup[y*pro->width+x].setPoint(li, 15+r);
-	  }
-      }
+    {
+      write(1, "\n", 1);
+      for (int32_t x = 0; x < pro->width; x ++)
+	{
+	  double h = 0;
+	  if (tab[y*pro->width + x] == 1)
+	    {
+	      write(1, "#", 1);
+	      h = 9;
+	    }
+	  else
+	    {
+	      write(1, " ", 1);
+	      h = 0;
+	    }
+	  for (int32_t li = 0; li < 9; li ++)
+	    {
+	      int r = rand()%5;
+	      pro->tiles[y*pro->width+x].setPoint(li, h);
+	      pro->tiles_sup[y*pro->width+x].setPoint(li, 15+r);
+	    }
+	}
+    }
   //
   init_tiles(pro);
   init_tiles_sup(pro);
