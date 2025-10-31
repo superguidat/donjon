@@ -32,17 +32,16 @@ t_bunny_response		game_entering(t_prog	*pro)
   pro->me.setVertical_speed(0.0);
 
   //generation d'une carte aleatoire
-  pro->height = 50;
-  pro->width = 50;
-  srand(time(NULL));
+  pro->height = WIDTH_MAP;
+  pro->width = HEIGHT_MAP;
+  //srand(time(NULL));
 
   t_bunny_position Rcorner[5];
   Floor mfloor;
-  uint32_t tab[pro->width * pro->height];
   room tempFloorroom(0, pro->width, 0, pro->height, 7);
   int i;
   int j;
-  t_bunny_color color[2] = { {.full = RED}, {.full = BLUE} };
+  uint32_t			tab[WIDTH_MAP * HEIGHT_MAP];
 
   srand(time(NULL));
   i = 0;
@@ -70,6 +69,7 @@ t_bunny_response		game_entering(t_prog	*pro)
 	    tab[y2*pro->width+x2] = 1;
       i++;
     }
+  std::cout << "largeur de la carte : " << pro->width << "\nhauteur de la carte : " << pro->height << std::endl;
   for (int32_t y = 0; y < pro->height; y ++)
     {
       write(1, "\n", 1);
@@ -78,19 +78,19 @@ t_bunny_response		game_entering(t_prog	*pro)
 	  double h = 0;
 	  if (tab[y*pro->width + x] == 1)
 	    {
-	      write(1, "#", 1);
+	      write(1, " #", 2);
 	      h = 9;
 	    }
 	  else
 	    {
-	      write(1, " ", 1);
+	      write(1, "  ", 2);
 	      h = 0;
 	    }
 	  for (int32_t li = 0; li < 9; li ++)
 	    {
 	      int r = rand()%5;
-	      pro->tiles[y*pro->width+x].setPoint(li, h);
-	      pro->tiles_sup[y*pro->width+x].setPoint(li, 15+r);
+	      pro->bas.tiles[y*pro->width+x].setPoint(li, h);
+	      pro->haut.tiles[y*pro->width+x].setPoint(li, 15+r);
 	    }
 	}
     }

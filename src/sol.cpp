@@ -15,8 +15,8 @@ void			sol(t_prog		&pro,
       && x > -(pro.width/2))
     {
       init_triangle_RL(pos,
-		       pro.tiles[(y+pro.height/2)*pro.width + ((x-1)+pro.width/2)],
-		       pro.tiles[(y+pro.height/2)*pro.width + ((x)+pro.width/2)]);
+		       pro.bas.tiles[(y+pro.height/2)*pro.width + ((x-1)+pro.width/2)],
+		       pro.bas.tiles[(y+pro.height/2)*pro.width + ((x)+pro.width/2)]);
       set_zcarre(pos, pro, 2);
       set_zcarre(&pos[6], pro, 2);
     }
@@ -24,8 +24,8 @@ void			sol(t_prog		&pro,
       && y > -(pro.height/2))
     {
       init_triangle_HB(pos,
-		       pro.tiles[((y-1)+pro.height/2)*pro.width + ((x)+pro.width/2)],
-		       pro.tiles[(y+pro.height/2)*pro.width + ((x)+pro.width/2)]);
+		       pro.bas.tiles[((y-1)+pro.height/2)*pro.width + ((x)+pro.width/2)],
+		       pro.bas.tiles[(y+pro.height/2)*pro.width + ((x)+pro.width/2)]);
       set_zcarre(pos, pro, 2);
       set_zcarre(&pos[6], pro, 2);
     }

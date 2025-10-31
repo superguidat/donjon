@@ -33,9 +33,9 @@ bool			collision_me(t_prog		&pro,
   for (int32_t y = 0; y < pro.height; y ++)
     for (int32_t x = 0; x < pro.width; x ++)
       {
-	if (check_me_first(cam, pro.tiles[y * pro.width + x]))
+	if (check_me_first(cam, pro.bas.tiles[y * pro.width + x]))
 	  {
-	    z = min_dist_point(pro.tiles[y * pro.width + x], cam);
+	    z = min_dist_point(pro.bas.tiles[y * pro.width + x], cam);
 	    if (cam.z <= z - LIMITE_FRANCHISSEMENT)
 	      return true;
 	    else

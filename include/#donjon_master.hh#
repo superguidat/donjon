@@ -9,8 +9,6 @@
 #include			<room.hh>
 #include			<SFML/Graphics.hpp>
 
-#define				WIDTH_MAP			70
-#define				HEIGHT_MAP			70
 #define				WIDTH				800
 #define				HEIGHT				600
 #define				GRAVITY				9.8
