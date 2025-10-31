@@ -36,6 +36,7 @@ class Tile
   int32_t		getSize()				{return size;}
   double		getBase_height()			{return (base_height);}
   t_zposition		getPos(int32_t		i)		{return (pos[i]);}
+  Room			*getRoom()				{return (room);}
 
   void			setPoint(int8_t		point,
 				 double		h)		{points_of_elevation[point] = h;}
@@ -45,6 +46,7 @@ class Tile
   void			setPos(int32_t		i,
 			       t_zposition	_pos)		{pos[i] = _pos;}
  private:
+  Room			*room;
   int32_t		size;
   int32_t		type; // 0 null/outside of play range , 1 floor-tile
   double		base_height;
