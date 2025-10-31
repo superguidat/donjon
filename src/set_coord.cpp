@@ -28,13 +28,13 @@ static void	init_p(t_coord				&coo,
       if (sup > 0)
 	coo.p[i] = {.x = coo.pos[0].x,
 		    .y = coo.pos[0].y + coo.tile_size,
-		    .z = coo.pro.tiles_sup[(coo.y + coo.pro.height / 2)
+		    .z = coo.pro.haut.tiles[(coo.y + coo.pro.height / 2)
 					   * coo.pro.width
 					   + (coo.x + coo.pro.width / 2)].getPoint(i)};
       else
 	coo.p[i] = {.x = coo.pos[0].x,
 		    .y = coo.pos[0].y + coo.tile_size,
-		    .z = coo.pro.tiles[(coo.y + coo.pro.height / 2)
+		    .z = coo.pro.bas.tiles[(coo.y + coo.pro.height / 2)
 				       * coo.pro.width
 				       + (coo.x + coo.pro.width / 2)].getPoint(i)};
     }

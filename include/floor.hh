@@ -16,18 +16,22 @@
 #include "room.hh"
 #include <vector>
 
+#define				WIDTH_MAP			70
+#define				HEIGHT_MAP			70
+
 class Floor
 {
  public:
   Floor();
   // private:
-  int number;
-  double max_height;
+  int		number;
+  double	max_height;
+  Tile		tiles[WIDTH_MAP * HEIGHT_MAP];
   //x and y size;
-  int x;
-  int y;
+  int		x;
+  int		y;
   std::vector<room> rooms;
-  int special_rooms;
+  int		special_rooms;
   void subdivide(room parent_room, int max);
 };
 
