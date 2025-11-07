@@ -41,8 +41,16 @@ t_bunny_response        game_display(t_prog				*prog)
 	      else
 		write(1, "  ", 1);*/
 	      if (!prog->deb)
-		plafond(*prog, x, y);
-	      sol(*prog, x, y, pos);
+		{
+		  int gh = (prog->etage_actuel+1) >= prog->nb_etage ? 0 : (prog->etage_actuel+1);
+		  plafond(*prog, prog->haut, x, y, gh);
+		}
+	      sol(*prog,
+		  prog->bas,
+		  x,
+		  y,
+		  pos,
+		  (prog->etage_actuel));
 	    }
 	  prog->pos.x += (cos(prog->rot)*20);
 	  prog->pos.y += (sin(prog->rot)*20);

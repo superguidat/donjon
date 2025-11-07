@@ -9,8 +9,6 @@
 #include			<room.hh>
 #include			<SFML/Graphics.hpp>
 
-#define				WIDTH_MAP			70
-#define				HEIGHT_MAP			70
 #define				WIDTH				800
 #define				HEIGHT				600
 #define				GRAVITY				9.8
@@ -223,6 +221,8 @@ struct				t_prog
   Floor				bas;
   Floor				haut;
   Floor				etage[100];
+  int32_t			nb_etage;
+  int32_t			etage_actuel;
   int32_t			width;
   int32_t			height;
   ef::Unit			me;
@@ -250,6 +250,16 @@ struct				t_coord
   int32_t			y;
   int32_t			tile_size;
 };
+
+void				genere_etage(t_prog		&pro,
+					     int32_t		*tab,
+					     double		base_height);
+
+void				genere_floor(int32_t		width,
+					     int32_t		height,
+					     Floor		&flo,
+					     int32_t		*tab,
+					     double		z);
 
 double				rclamp(double			val,
 				       double			min,
@@ -279,7 +289,9 @@ void				init_triangle_RL(t_zposition    *posf,
 void				init_triangle_LR(t_zposition    *pos,
 						 t_zposition    *posi);
 
-void				init_tiles(t_prog		*pro);
+void				init_tiles(t_prog		*pro,
+					   Floor		&flo,
+					   int8_t		sup);
 void				init_tiles_sup(t_prog		*pro);
 
 t_bunny_response		charge_texture(const char	*file_path,
@@ -298,7 +310,7 @@ void				set_triangle_text(t_zposition	*pos,
 						  GLuint	textureID);
 
 void				set_coord(t_coord               coo,
-					  int8_t		sup);
+					  int8_t		etage);
 
 void				set_carre(t_zposition		pos,
 					  t_prog		&pro,
@@ -310,13 +322,17 @@ void				set_zcarre(t_zposition		*pos,
 					   int16_t		id);
 
 void				plafond(t_prog			&pro,
+					Floor			&flo,
 					int32_t			x,
-					int32_t			y);
+					int32_t			y,
+					int8_t			etage);
 
 void				sol(t_prog			&pro,
+				    Floor			&flo,
 				    int32_t			x,
 				    int32_t			y,
-				    t_zposition			*pos);
+				    t_zposition			*pos,
+				    int8_t			etage);
 
 void				saut_graviter(t_prog		&pro);
 

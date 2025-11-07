@@ -24,8 +24,8 @@ int		main(int32_t		ac,
 
   if ((pro = charge_prog()) == NULL)
     return -1;
-  pro->pos.x = 0;
-  pro->pos.y = 0;
+  pro->pos.x = 0.5;
+  pro->pos.y = 0.5;
   pro->pos.z = 0;
   pro->deb = false;
   if (ac > 1)

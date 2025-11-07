@@ -1,0 +1,96 @@
+ #include		"donjon_master.hh"
+
+static void		modifie_z(double		z,
+				  int32_t		*tab,
+				  Floor			&flo,
+				  int32_t		i)
+{
+  double		h[9];
+
+  if (tab[i] == 1)
+    {
+      write(1, " #", 2);
+      for(int32_t l = 0; l < 9; h[l++] = 9);
+    }
+  else if (tab[i] == 2)
+    {
+      write(1, " _", 2);
+      for(int32_t l = 0; l < 3; h[l++] = 1);
+      for(int32_t l = 3; l < 6; h[l++] = 3);
+      for(int32_t l = 6; l < 9; h[l++] = 5);
+    }
+  else if (tab[i] == 3)
+    {
+      write(1, "/ ", 2);
+      for(int32_t l = 0; l < 3; h[l++] = 5);
+      for(int32_t l = 3; l < 6; h[l++] = 7);
+      for(int32_t l = 6; l < 9; h[l++] = 9);
+    }
+  else if (tab[i] == 0
+	   || tab[i] == -1)
+    {
+      write(1, "  ", 2);
+      for(int32_t l = 0; l < 9; h[l++] = 0);
+    }
+  for (int32_t li = 0; li < 9; li ++)
+    {
+      if (0)
+	flo.tiles[i].setType(1);
+      else
+	flo.tiles[i].setType(0);
+      flo.tiles[i].setPoint(li, z+h[li]);
+    }
+  flo.tiles[i].setBase_height(z);
+}
+
+void		genere_floor(int32_t		width,
+			     int32_t		height,
+			     Floor		&flo,
+			     int32_t		*tab,
+			     double		z)
+{
+  int32_t	size_coul;
+  room		couloir(100);
+
+  std::cout << "largeur de la carte : " << width
+	    << "\nhauteur de la carte : " << height
+	    << std::endl;
+  size_coul = 0;
+  for (int32_t y = 0; y < height; y ++)
+    {
+      write(1, "\n", 1);
+      for (int32_t x = 0; x < width; x ++)
+	{
+	  modifie_z(z, tab, flo, y*width + x);
+	  if (tab[y*width + x] == 0)
+	    {
+	      size_coul ++;
+	      couloir.tiles.resize(size_coul);
+	      couloir.tiles[size_coul-1].setBase_height(z);
+	      couloir.tiles[size_coul-1].id = y*width + x;
+	      couloir.tiles[size_coul-1].x = x;
+	      couloir.tiles[size_coul-1].y = y;
+	      for (int32_t li = 0; li < 9; li ++)
+		if (x == 0
+		    || y == 0
+		    || x == width-5
+		    || y == height-5)
+		  {
+		    flo.tiles[y*width + x].setPoint(li, z+9);
+		    couloir.tiles[size_coul-1].setPoint(li, z+9);
+		  }
+		else
+		  {
+		    flo.tiles[y*width + x].setPoint(li, z+0);
+		    couloir.tiles[size_coul-1].setPoint(li, z+0);
+		  }
+
+	      for (int32_t li = 0; li < 9; li ++)
+		couloir.tiles[size_coul-1].setPoint(li, z+0);
+	    }
+	}
+    }
+  if (couloir.tiles.size() > 0)
+    flo.rooms.push_back(couloir);
+  flo.number = flo.rooms.size();
+}

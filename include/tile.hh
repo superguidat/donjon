@@ -13,16 +13,17 @@
 #ifndef		__tile_hh__
 #define		__tile_hh__
 
-#include <lapin.h>
+#include	<lapin.h>
+#include	<vector>
 
-#define		SOUS_POINT			9
-#define		TILE_SIZE			36
+#define		SOUS_POINT	9
+#define		TILE_SIZE	36
 
 struct				t_zposition
 {
-  double			x;
-  double			y;
-  double			z;
+  double			x = 0;
+  double			y = 0;
+  double			z = 0;
 };
 
 class Tile
@@ -30,6 +31,10 @@ class Tile
  public:
   Tile(void);
   ~Tile(void);
+
+  void			operator=(const Tile     &other);
+  bool			operator==(const Tile     &other) const;
+
 
   double		getPoint(int8_t		point)		{return (points_of_elevation[point]);}
   int32_t		getType()				{return (type);}
@@ -45,13 +50,18 @@ class Tile
   void			setBase_height(double	_base_height)	{base_height = _base_height;}
   void			setPos(int32_t		i,
 			       t_zposition	_pos)		{pos[i] = _pos;}
+
+  double		points_of_elevation[9]; // base_height + 9 pique de + ou - hauteur. = {0} pour avoir aucun changement
+  t_zposition		pos[9];
+  int32_t		id;
+  int32_t		x;
+  int32_t		y;
+
  private:
   Room			*room;
   int32_t		size;
   int32_t		type; // 0 null/outside of play range , 1 floor-tile
   double		base_height;
-  double		points_of_elevation[9]; // base_height + 9 pique de + ou - hauteur. = {0} pour avoir aucun changement
-  t_zposition		pos[9];
 };
 
 void                    limit_gravity(double    &posz,

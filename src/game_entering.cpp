@@ -4,6 +4,7 @@ extern "C"
 
 t_bunny_response		game_entering(t_prog	*pro)
 {
+  //srand(time(NULL));
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
 
@@ -30,72 +31,52 @@ t_bunny_response		game_entering(t_prog	*pro)
   pro->me.setGravity(GRAVITY);
   pro->me.setIs_jumping(false);
   pro->me.setVertical_speed(0.0);
-
-  //generation d'une carte aleatoire
   pro->height = WIDTH_MAP;
   pro->width = HEIGHT_MAP;
-  //srand(time(NULL));
+  pro->etage_actuel = 0;
+  pro->nb_etage = 0;
 
-  t_bunny_position Rcorner[5];
-  Floor mfloor;
-  room tempFloorroom(0, pro->width, 0, pro->height, 7);
-  int i;
-  int j;
-  uint32_t			tab[WIDTH_MAP * HEIGHT_MAP];
+  int32_t		tab[WIDTH_MAP * HEIGHT_MAP];
+  int32_t		h=0;
 
-  srand(time(NULL));
-  i = 0;
-
-  mfloor.subdivide(tempFloorroom, 100);
-  j = mfloor.rooms.size();
-
-  for (int32_t y = 0; y < pro->height; y ++)
-    for (int32_t x = 0; x < pro->width; x ++)
-      tab[y*pro->width+x] = 0;
-
-  while(i < j)
+  for (int32_t m = 0; m < 15; m ++)
     {
-      Rcorner[0] = mfloor.rooms[i].corner[0];
-      Rcorner[1] = mfloor.rooms[i].corner[1];
-      Rcorner[2] = mfloor.rooms[i].corner[3];
-      Rcorner[3] = mfloor.rooms[i].corner[2];
-      Rcorner[4] = mfloor.rooms[i].corner[0];
-      for (int32_t y2 = Rcorner[0].y; y2 < Rcorner[2].y; y2 ++)
-	for (int32_t x2 = Rcorner[0].x; x2 < Rcorner[1].x; x2 ++)
-	  if (x2 == Rcorner[0].x
-	      || x2 == Rcorner[1].x-1
-	      || y2 == Rcorner[0].y
-	      || y2 == Rcorner[2].y-1)
-	    tab[y2*pro->width+x2] = 1;
-      i++;
+      genere_etage(*pro, tab, h);
+      genere_floor(pro->width, pro->height, pro->etage[pro->nb_etage-1], tab, h);
+      init_tiles(pro, pro->etage[pro->nb_etage-1], pro->nb_etage-1);
+
+      h += 9;
+
+      genere_etage(*pro, tab, h);
+      genere_floor(pro->width, pro->height, pro->etage[pro->nb_etage-1], tab, h);
+      init_tiles(pro, pro->etage[pro->nb_etage-1], pro->nb_etage-1);
+
+      h += 9;
+
+      std::cout << "\nmap bas = " << m << "   map haut = " << m + 1 << std::endl;
     }
-  std::cout << "largeur de la carte : " << pro->width << "\nhauteur de la carte : " << pro->height << std::endl;
-  for (int32_t y = 0; y < pro->height; y ++)
-    {
-      write(1, "\n", 1);
-      for (int32_t x = 0; x < pro->width; x ++)
-	{
-	  double h = 0;
-	  if (tab[y*pro->width + x] == 1)
-	    {
-	      write(1, " #", 2);
-	      h = 9;
-	    }
-	  else
-	    {
-	      write(1, "  ", 2);
-	      h = 0;
-	    }
-	  for (int32_t li = 0; li < 9; li ++)
-	    {
-	      int r = rand()%5;
-	      pro->bas.tiles[y*pro->width+x].setPoint(li, h);
-	      pro->haut.tiles[y*pro->width+x].setPoint(li, 15+r);
-	    }
-	}
-    }
-  //
-  init_tiles(pro);
-  init_tiles_sup(pro);
+
+  /*  genere_etage(*pro, tab, 0);
+  genere_floor(pro->width, pro->height, pro->etage[0], tab, 0);
+  init_tiles(pro, pro->etage[0], 0);
+  pro->bas<<pro->etage[0];
+
+  genere_etage(*pro, tab, 9);
+  genere_floor(pro->width, pro->height, pro->etage[1], tab, 9);
+  init_tiles(pro, pro->etage[1], 1);*/
+
+  pro->bas<<pro->etage[0];
+  pro->haut<<pro->etage[1];
+  if ((pro->bas == pro->etage[0]) == false)
+    std::cout << "\nsa marche pas 0 " << std::endl;
+  else
+    std::cout << "\ncarte superieur bien charger" << std::endl;
+  if ((pro->haut == pro->etage[1]) == false)
+    std::cout << "\nsa marche pas 1 " << std::endl;
+  else
+    std::cout << "\ncarte actuelle bien charger" << std::endl;
+
+  //pro->bas<<pro->etage[0];
+  //init_tiles(pro, pro->bas, -1);
   return GO_ON;
 }

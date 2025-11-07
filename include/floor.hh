@@ -12,7 +12,6 @@
 
 #ifndef __floor_hh_
 #define __floor_hh_
-#include "tile.hh"
 #include "room.hh"
 #include <vector>
 
@@ -23,7 +22,16 @@ class Floor
 {
  public:
   Floor();
+  Floor(const Floor &floor)
+  {
+    (*this) = floor;
+  }
   // private:
+
+  void		operator=(const Floor		&other);
+  bool		operator==(const Floor		&other) const;
+  void		operator<<(const Floor		&other);
+
   int		number;
   double	max_height;
   Tile		tiles[WIDTH_MAP * HEIGHT_MAP];

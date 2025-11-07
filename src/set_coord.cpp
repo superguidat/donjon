@@ -21,32 +21,25 @@ static void     set_coord2(t_coord			&coo)
 }
 
 static void	init_p(t_coord				&coo,
-		       int8_t				sup)
+		       int8_t				etage)
 {
   for (int8_t i = 0; i < 9; i++)
     {
-      if (sup > 0)
-	coo.p[i] = {.x = coo.pos[0].x,
-		    .y = coo.pos[0].y + coo.tile_size,
-		    .z = coo.pro.haut.tiles[(coo.y + coo.pro.height / 2)
-					   * coo.pro.width
-					   + (coo.x + coo.pro.width / 2)].getPoint(i)};
-      else
-	coo.p[i] = {.x = coo.pos[0].x,
-		    .y = coo.pos[0].y + coo.tile_size,
-		    .z = coo.pro.bas.tiles[(coo.y + coo.pro.height / 2)
-				       * coo.pro.width
-				       + (coo.x + coo.pro.width / 2)].getPoint(i)};
+      coo.p[i] = {.x = coo.pos[0].x,
+		  .y = coo.pos[0].y + coo.tile_size,
+		  .z = coo.pro.etage[etage].tiles[(coo.y + coo.pro.height / 2)
+						  * coo.pro.width
+						  + (coo.x + coo.pro.width / 2)].getPoint(i)};
     }
 }
 
 void		set_coord(t_coord			coo,
-			  int8_t			sup)
+			  int8_t			etage)
 {
   t_zposition	p[9];
 
   coo.p = p;
-  init_p(coo, sup);
+  init_p(coo, etage);
   set_coord2(coo);
   coo.pos[12] = {.x = coo.pos[11].x, .y = coo.pos[11].y, .z = -5 + coo.p[4].z};
   coo.pos[13] = {.x = coo.pos[9].x, .y = coo.pos[9].y, .z = -5 + coo.p[3].z};

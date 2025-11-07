@@ -32,7 +32,7 @@ LDFLAGS     = $(SFML_LIBS) $(OPENGL_LIBS) $(GLFW_LIBS) $(OPENCV_LIBS) $(OTHER_LI
 # Règles
 # ------------------------
 
-all: $(NAME)
+all:  $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
