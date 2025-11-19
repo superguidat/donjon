@@ -9,6 +9,7 @@
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
 #include "room.hh"
+
 bool room::isMinimal() const
 {
   int sizex = corner[3].x - corner[0].x;

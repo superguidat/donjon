@@ -67,15 +67,18 @@ void				init_tiles(t_prog	*pro,
 					   int8_t	etage)
 {
   t_zposition			pos[30];
+  int32_t			x;
+  int32_t			y;
 
-  for (int32_t salle = 0; salle < flo.rooms.size(); salle++)
+  for (int32_t salle = 0; salle < static_cast<int32_t>(flo.rooms.size()); salle++)
     {
-      for (int32_t id = 0; id < flo.rooms[salle].tiles.size(); id++)
+      for (int32_t id = 0; id < static_cast<int32_t>(flo.rooms[salle].tiles.size()); id++)
 	{
-	  int32_t x = flo.rooms[salle].tiles[id].x - (pro->width/2);
-	  int32_t y = flo.rooms[salle].tiles[id].y - (pro->height/2);
+	  y = flo.rooms[salle].tiles[id].y - (pro->height/2);
+	  x = flo.rooms[salle].tiles[id].x - (pro->width/2);
 	  pos[0].x = x * (TILE_SIZE);
 	  pos[0].y = y * (TILE_SIZE);
+	  flo.tiles[(y + pro->height/2) * pro->width+(x + pro->width/2)].setId_room(flo.rooms[salle].tiles[id].getId_room());
 	  set_coord({*pro, pos, NULL, x, y, (TILE_SIZE / 2)}, etage);
 	  flo.tiles[(y + pro->height/2) * pro->width+(x + pro->width/2)].
 	    setPos(0, {pos[0].x, pos[0].y, pos[0].z});

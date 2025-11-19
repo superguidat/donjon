@@ -23,6 +23,7 @@ void			genere_etage(t_prog		&pro,
       Rcorner[0] = mfloor.rooms[i].corner[0];
       Rcorner[1] = mfloor.rooms[i].corner[1];
       Rcorner[2] = mfloor.rooms[i].corner[3];
+      pro.etage[pro.nb_etage].rooms[i].id = i;
       pro.etage[pro.nb_etage].rooms[i].create(tab, Rcorner, base_height, pro.width);
     }
   pro.etage[pro.nb_etage].number = pro.etage[pro.nb_etage].rooms.size();

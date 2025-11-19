@@ -16,7 +16,7 @@ bool			room::operator==(const room		&other) const
       || corner[3].y != other.corner[3].y
       || tiles.size() != other.tiles.size())
     return false;
-  for (int32_t i = 0; i < other.tiles.size(); i ++)
+  for (int32_t i = 0; i < static_cast<int32_t>(other.tiles.size()); i ++)
     {
       assert(tiles[i]==other.tiles[i]);
       if ((tiles[i]==other.tiles[i]) == false)

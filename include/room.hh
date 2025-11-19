@@ -19,7 +19,7 @@
 class room
 {
  public:
-  room(void){return; };
+  room(void);
   room(int		minsize);
   room(int		x1,
        int		x2,
@@ -55,6 +55,7 @@ class room
   int32_t		minsize;
   int32_t		w;
   int32_t		h;
+  int32_t		id;
 };
 
 #endif//    __ROOM_HH__

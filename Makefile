@@ -7,7 +7,7 @@ NAME        = dungeon_master
 # --- Sources (tous les .cpp + glad.c) ---
 SRC         = 	$(wildcard src/*.cpp) 	\
 		$(wildcard src/*/*.cpp) 	\
-		src/glad.c
+		src/utile/glad.c
 OBJS        = $(SRC:.cpp=.o)
 OBJS        := $(OBJS:.c=.o)  # convert glad.c -> glad.o
 

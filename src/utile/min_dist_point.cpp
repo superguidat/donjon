@@ -3,22 +3,29 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 24/10/2025 17:14:04 ******************************************************
-// romain.cescutti <romain.cescutti@jemison.efrits.fr>
-// - donjon_master -
+// 17/11/2025 13:34:13 ******************************************************
+// kenan.guidat <kenan.guidat@debian>
+// - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include "room.hh"
-bool room::isMinimal() const
-{
-  int sizex = corner[3].x - corner[0].x;
-  int sizey = corner[3].y - corner[0].y;
+#include	"donjon_master.hh"
 
-  if (sizex * sizey < (minsize / 4) * (minsize / 4))
-    return (true);
-  if (sizex < minsize)
-    return true;
-  if(sizey < minsize)
-    return true;
-  return false;
+double		min_dist_point(Tile		&tuil,
+			       t_zposition	&cam)
+{
+  double	mind;
+  double	d;
+  double	z;
+
+  mind = distance(cam, tuil.getPos(0));
+  for (int32_t i = 0; i < 9; i ++)
+    {
+      d = distance(cam, tuil.getPos(i));
+      if (mind > d)
+	{
+	  z = tuil.getPoint(i);
+	  mind = d;
+	}
+    }
+  return z;
 }

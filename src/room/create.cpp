@@ -44,6 +44,7 @@ void			room::create(int32_t		*tab,
 	  tiles[(y2 -  Rcorner[0].y) * w + (x2 - Rcorner[0].x)].x = x2;
 	  tiles[(y2 -  Rcorner[0].y) * w + (x2 - Rcorner[0].x)].setType(0);
 	  tiles[(y2 -  Rcorner[0].y) * w + (x2 - Rcorner[0].x)].setSize(TILE_SIZE);
+	  tiles[(y2 -  Rcorner[0].y) * w + (x2 - Rcorner[0].x)].setId_room(id);
 	}
     }
 }

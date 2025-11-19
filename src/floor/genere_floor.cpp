@@ -70,6 +70,7 @@ void		genere_floor(int32_t		width,
 	      couloir.tiles[size_coul-1].id = y*width + x;
 	      couloir.tiles[size_coul-1].x = x;
 	      couloir.tiles[size_coul-1].y = y;
+	      couloir.tiles[size_coul-1].id = flo.rooms.size();
 	      for (int32_t li = 0; li < 9; li ++)
 		if (x == 0
 		    || y == 0
@@ -91,6 +92,9 @@ void		genere_floor(int32_t		width,
 	}
     }
   if (couloir.tiles.size() > 0)
-    flo.rooms.push_back(couloir);
+    {
+      flo.rooms.push_back(couloir);
+      couloir.id = flo.rooms.size()-1;
+    }
   flo.number = flo.rooms.size();
 }

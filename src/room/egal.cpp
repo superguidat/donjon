@@ -10,6 +10,6 @@ void				room::operator=(const room     &other)
   corner[2] = other.corner[2];
   corner[3] = other.corner[3];
   tiles.resize(other.tiles.size());
-  for (int32_t i = 0; i < other.tiles.size(); i ++)
+  for (int32_t i = 0; i < static_cast<int32_t>(other.tiles.size()); i ++)
     tiles[i] = other.tiles[i];
 }

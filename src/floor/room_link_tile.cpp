@@ -8,6 +8,7 @@
 // - donjon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
+/*
 #include ""
 
 void Prog::Link_tile_to_room(Room room)
@@ -26,3 +27,4 @@ void Prog::Link_tile_to_room(Room room)
 	}
     }
 }
+*/

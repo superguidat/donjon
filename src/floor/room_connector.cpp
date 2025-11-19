@@ -8,6 +8,7 @@
 // - donjon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
+/*
 void Floor::room_connector(Room room1, Room room2)
 {
   
@@ -17,3 +18,4 @@ int Floor::room_finder(Room mainroom)
 {
   
 }
+*/

@@ -12,10 +12,6 @@
 #include <lapin.h>
 #include <cstdlib>
 
-Floor::Floor()
-{
-}
-
 bool roomcheck(int roomsize)
 {
   float val;

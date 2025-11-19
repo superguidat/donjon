@@ -55,6 +55,7 @@ namespace			ef
     void			setPosDest(double	_x ,
 					   double	_y)	{x_dest = _x; y_dest = _y;}
 
+    void			draw(t_prog		*pro);
   private:
     int32_t			r;
     int32_t			i;

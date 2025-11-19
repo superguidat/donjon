@@ -10,6 +10,6 @@ void			Floor::operator<<(const Floor	&other)
   special_rooms = other.special_rooms;
   for (int32_t li = 0; li < WIDTH_MAP * HEIGHT_MAP; li++)
     tiles[li] = other.tiles[li];
-  for (int32_t l = 0; l < other.rooms.size(); l ++)
+  for (int32_t l = 0; l < static_cast<int32_t>(other.rooms.size()); l ++)
     rooms[l] = other.rooms[l];
 }

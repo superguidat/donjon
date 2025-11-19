@@ -26,7 +26,7 @@ int		main(int32_t		ac,
     return -1;
   pro->pos.x = 0.5;
   pro->pos.y = 0.5;
-  pro->pos.z = 0;
+  pro->pos.z = 9;
   pro->deb = false;
   if (ac > 1)
     {
@@ -45,5 +45,5 @@ int		main(int32_t		ac,
   bunny_set_display_function(game_display);
   bunny_loop(pro->win, 60, pro);
   bunny_stop(pro->win);
-  free(pro);
+  delete pro;
 }
