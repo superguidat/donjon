@@ -43,6 +43,7 @@ int		main(int32_t		ac,
   bunny_set_entering_context_response(game_entering);
   bunny_set_loop_main_function(game_loop);
   bunny_set_display_function(game_display);
+  bunny_set_click_response(game_click);
   bunny_loop(pro->win, 60, pro);
   bunny_stop(pro->win);
   delete pro;

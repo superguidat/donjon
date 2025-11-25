@@ -236,10 +236,21 @@ struct				t_coord
   int32_t			tile_size;
 };
 
+double				computeLevitation(const sf::Time &passer,
+						  double	z,
+						  double	speed,
+						  double	amp);
+
 double				min_dist_point(Tile		&tuil,
 					       t_zposition	&cam);
 
-void				draw_cube_texture(t_zposition	pos,
+void				draw_pave_texture(double	zdelt,
+						  t_zposition	pos,
+						  t_zposition	s,
+						  GLuint	texture);
+
+void				draw_cube_texture(double	zdelt,
+						  t_zposition	pos,
 						  double	size,
 						  GLuint	texture);
 
@@ -297,7 +308,8 @@ void				clear_img(t_bunny_color		&color);
 
 void				move_cam(t_zposition		pos_cam,
 					 t_zposition		dir_cam,
-					 t_zposition		vec_cam);
+					 t_zposition		vec_cam,
+					 int			ecran);
 
 void				set_triangle(t_zposition	*pos,
 					     t_bunny_color	*colo);

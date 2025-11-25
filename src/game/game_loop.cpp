@@ -20,5 +20,12 @@ t_bunny_response                game_loop(t_prog			*prog)
       if (!prog->deb)
 	saut_graviter(*prog);
     }
+  else
+    {
+      t_bunny_position *pos;
+      pos = (t_bunny_position*)bunny_get_mouse_position();
+      pos->x = pos->x % prog->win->buffer.width;
+      pos->y = pos->y % prog->win->buffer.height;
+    }
   return (GO_ON);
 }

@@ -12,9 +12,15 @@ t_bunny_response        game_key(t_bunny_event_state	state,
   if (sym == BKS_F1)
     {
       if (prog->ecran == 0)
-	prog->ecran = 1;
+	{
+	  prog->ecran = 1;
+	  glDisable(GL_DEPTH_TEST);
+	}
       else if (prog->ecran == 1)
-	prog->ecran = 0;
+	{
+	  glEnable(GL_DEPTH_TEST);
+	  prog->ecran = 0;
+	}
     }
   if (prog->ecran == 0)
     {

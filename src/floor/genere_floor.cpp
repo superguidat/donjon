@@ -41,6 +41,7 @@ static void		modifie_z(double		z,
       flo.tiles[i].setPoint(li, z+h[li]);
     }
   flo.tiles[i].setBase_height(z);
+  flo.tiles[i].id = i;
 }
 
 void		genere_floor(int32_t		width,
