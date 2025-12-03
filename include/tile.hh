@@ -95,9 +95,8 @@ class Tile
 
  private:
   int32_t		id_room;
-  room			*hroom;
   int32_t		size;
-  int32_t		type; // 0 null/outside of play range , 1 floor-tile
+  int32_t		type;
   double		base_height;
 };
 

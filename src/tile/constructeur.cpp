@@ -6,7 +6,7 @@ Tile::Tile(void)
   , y(0)
   , id_room(0)
   , size(TILE_SIZE)
-  , type(0)
+  , type(1)
   , base_height(0)
 {
   for (int8_t i = 0; i < 9; i++)

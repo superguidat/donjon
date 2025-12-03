@@ -5,8 +5,8 @@ bool			Floor::operator==(const Floor		&other) const
 {
   if (number != other.number
       || max_height != other.max_height
-      || x != other.x
-      || y != other.y
+      || size.x != other.size.x
+      || size.y != other.size.y
       || special_rooms != other.special_rooms)
     return false;
    for (int32_t l = 0; l < other.number; l ++)

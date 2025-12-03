@@ -47,10 +47,10 @@ class room
 
   typedef enum
   {
-    left,
-    right,
-    up,
-    down
+    left = 1,
+    right = 2,
+    top = 3,
+    down = 4
   }side;
 
   unsigned int		color;
@@ -71,7 +71,6 @@ class room
   std::vector<room>	neighbours;
   std::vector<side>     sides;
   int			connections;
->>>>>>> d903253 (des erreurs que il faut regler)
 };
 
 #endif//    __ROOM_HH__
