@@ -17,6 +17,8 @@
 #include	<lapin.h>
 #include	<climits>
 #include	<vector>
+#include	<lapin.h>
+#include	"room.hh"
 
 #define		SOUS_POINT	9
 #define		TILE_SIZE	36
@@ -59,7 +61,6 @@ namespace			ef
     double			degat;
   };
 }
-
 class Tile
 {
  public:
@@ -75,7 +76,7 @@ class Tile
   int32_t		getSize()				{return size;}
   double		getBase_height()			{return (base_height);}
   t_zposition		getPos(int32_t		i)		{return (pos[i]);}
-  int32_t		getId_room()		{return id_room;}
+  int32_t		getId_room()				{return id_room;}
 
   void			setId_room(int32_t	_id_room)		{id_room = _id_room;}
   void			setPoint(int8_t		point,
@@ -94,6 +95,7 @@ class Tile
 
  private:
   int32_t		id_room;
+  room			*hroom;
   int32_t		size;
   int32_t		type; // 0 null/outside of play range , 1 floor-tile
   double		base_height;

@@ -44,6 +44,6 @@ class Floor
   Tile			tiles[WIDTH_MAP * HEIGHT_MAP];
   ef::Objet		objets[256];
   uint16_t		nb_objets;
-};
 
+};
 #endif//	 __FLOOR_HH__
