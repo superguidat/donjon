@@ -33,17 +33,18 @@ class Floor
   void			operator<<(const Floor		&other);
   void			subdivide(room			parent_room,
 				  int			max);
-
+  void			room_connector(room		mainroom);
+  int			room_finder(room		mainroom);
+  void			create_corridor();
   int			number;
   double		max_height;
   //x and y size;
-  int			x;
-  int			y;
+  t_bunny_size		size;
   std::vector<room>	rooms;
   int			special_rooms;
   Tile			tiles[WIDTH_MAP * HEIGHT_MAP];
   ef::Objet		objets[256];
   uint16_t		nb_objets;
-};
 
+};
 #endif//	 __FLOOR_HH__

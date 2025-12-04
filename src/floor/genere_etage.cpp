@@ -12,6 +12,7 @@ void			genere_etage(t_prog		&pro,
 
   l = 0;
   mfloor.subdivide(tempFloorroom, 100);
+  mfloor.create_corridor();
   j = mfloor.rooms.size();
   for (int32_t y = 0; y < pro.height; y ++)
     for (int32_t x = 0; x < pro.width; x ++)

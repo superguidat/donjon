@@ -4,8 +4,8 @@ void			Floor::operator<<(const Floor	&other)
 {
   number = other.number;
   max_height = other.max_height;
-  x = other.x;
-  y = other.y;
+  size.x = other.size.x;
+  size.y = other.size.y;
   rooms.resize(other.rooms.size());
   special_rooms = other.special_rooms;
   for (int32_t li = 0; li < WIDTH_MAP * HEIGHT_MAP; li++)

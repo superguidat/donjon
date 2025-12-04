@@ -13,8 +13,11 @@
 #include <lapin.h>
 #include <vector>
 #include "tile.hh"
+#include <vector>
 
 #define			SIZE_COULOIR	1
+
+class Tile;
 
 class room
 {
@@ -41,6 +44,15 @@ class room
 			       double			base_height,
 			       int32_t			width);
 
+
+  typedef enum
+  {
+    left = 1,
+    right = 2,
+    top = 3,
+    down = 4
+  }side;
+
   unsigned int		color;
   bool			isMinimal()	const; // A priori, inutile vu les nouveaux concepts.
   bool			isXSplitable()	const;
@@ -56,6 +68,9 @@ class room
   int32_t		w;
   int32_t		h;
   int32_t		id;
+  std::vector<room>	neighbours;
+  std::vector<side>     sides;
+  int			connections;
 };
 
 #endif//    __ROOM_HH__
