@@ -133,7 +133,6 @@ int Floor::room_finder(room mainroom)
       y++;
       x = mainroom.corner[0].x;
     }
-
   return(mainroom.neighbours.size());
   //left sides checked!
   x = mainroom.corner[1].x;
