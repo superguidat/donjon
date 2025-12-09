@@ -13,7 +13,10 @@ void			genere_etage(t_prog		&pro,
   l = 0;
   for (int32_t y = 0; y < pro.height; y ++)
     for (int32_t x = 0; x < pro.width; x ++)
-      mfloor.tiles[y*pro.width+x] = 0;
+      {
+	tab[y*pro.width+x] = 1;
+	mfloor.tiles[y*pro.width+x].setType(1);
+      }
 
   mfloor.subdivide(tempFloorroom, 100);
   mfloor.create_corridor();
@@ -26,7 +29,7 @@ void			genere_etage(t_prog		&pro,
       Rcorner[1] = mfloor.rooms[i].corner[1];
       Rcorner[2] = mfloor.rooms[i].corner[3];
       pro.etage[pro.nb_etage].rooms[i].id = i;
-      pro.etage[pro.nb_etage].rooms[i].create(tab, Rcorner, base_height, pro.width);
+      pro.etage[pro.nb_etage].rooms[i].create(mfloor.tilestab, Rcorner, base_height, pro.width);
     }
   pro.etage[pro.nb_etage].number = pro.etage[pro.nb_etage].rooms.size();
   pro.nb_etage ++;
