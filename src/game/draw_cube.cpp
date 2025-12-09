@@ -10,14 +10,15 @@
 
 #include		"donjon_master.hh"
 
-void			draw_cube_texture(t_zposition			pos,
+void			draw_cube_texture(double			zdelt,
+					  t_zposition			pos,
 					  double			size,
 					  GLuint			texture)
 {
-    double		x = pos.x;
-    double		y = pos.y;
-    double		z = pos.z;
-    double		s = size;
+  double		x = pos.x;
+  double		y = pos.y;
+  double		z = pos.z + zdelt;
+  double		s = size;
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture);

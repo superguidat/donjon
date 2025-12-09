@@ -13,6 +13,7 @@
 #ifndef		__tile_hh__
 #define		__tile_hh__
 
+#include	<rng.hh>
 #include	<GL/glu.h>
 #include	<lapin.h>
 #include	<climits>

@@ -18,6 +18,8 @@
 #define			WIDTH_MAP			70
 #define			HEIGHT_MAP			70
 
+struct			t_prog;
+
 class Floor
 {
  public:
@@ -32,10 +34,13 @@ class Floor
   bool			operator==(const Floor		&other) const;
   void			operator<<(const Floor		&other);
   void			subdivide(room			parent_room,
-				  int			max);
+				  int			max,
+				  t_prog		*pro);
+
   void			room_connector(room		mainroom);
   int			room_finder(room		mainroom);
   void			create_corridor();
+
   int			number;
   double		max_height;
   //x and y size;

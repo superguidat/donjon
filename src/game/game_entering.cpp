@@ -14,64 +14,27 @@ extern "C"
 
 t_bunny_response		game_entering(t_prog	*pro)
 {
-  srand(time(NULL));
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
 
-  if (charge_texture("./res/texture/sol.png", pro, 0) == EXIT_ON_ERROR)
+  if (game_texture(pro) == EXIT_ON_ERROR)
     return EXIT_ON_ERROR;
-  if (charge_texture("./res/texture/ciel.png", pro, 1) == EXIT_ON_ERROR)
+  init_prog_jeu(pro);
+  if (reseau_hote_client(pro) == EXIT_ON_ERROR)
     return EXIT_ON_ERROR;
-  if (charge_texture("./res/texture/mur_noir.png", pro, 2) == EXIT_ON_ERROR)
-    return EXIT_ON_ERROR;
+  genere_jeu(pro, 9, 15);
+  int id;
+  for (int32_t y = 0; y < pro->height; y ++)
+    for (int32_t x = 0; x < pro->width; x ++)
+      if (pro->me.check_me_tile(pro->bas.tiles[y*pro->width+x]))
+	id = pro->bas.tiles[y*pro->width+x].id;
+  pro->etage[1].objets[0].tileID = id;
+  pro->etage[1].objets[0].textID = pro->def_objets[0].textID;
+  pro->etage[1].objets[0].setY(0);
+  pro->etage[1].objets[0].setX(0);
+  pro->etage[1].objets[0].setDegat(0);
+  pro->etage[1].objets[0].setI(0);
+  pro->etage[1].nb_objets = 1;
 
-  if (charge_texture_obj("./res/texture/mur.png", &pro->def_objets[0].textID) == EXIT_ON_ERROR)
-    return EXIT_ON_ERROR;
-
-  pro->tilt = 0;
-  pro->rot = 0;
-
-  pro->me.setPos_cam(pro->pos);
-  pro->me.setDir_cam((t_zposition){.x = (pro->pos.x + cos(pro->rot)),
-				   .y = (pro->pos.y + sin(pro->rot)),
-				   .z = 0});
-  pro->me.setVec_cam((t_zposition){.x = 0,
-				   .y = 0,
-				   .z = 1});
-
-  pro->me.setLast_jump_time(-1.0);
-  pro->me.setJump_cooldown(JUMP_COOLDOWN);
-  pro->me.setJump_force(JUMP_FORCE);
-  pro->me.setGravity(GRAVITY);
-  pro->me.setIs_jumping(false);
-  pro->me.setVertical_speed(0.0);
-  pro->height = WIDTH_MAP;
-  pro->width = HEIGHT_MAP;
-  pro->etage_actuel = 1;
-  pro->nb_etage = 0;
-  pro->ecran = 0;
-
-  int32_t		tab[WIDTH_MAP * HEIGHT_MAP];
-  int32_t		h=0;
-
-  for (int32_t m = 0; m < 15; m ++)
-    {
-      genere_etage(*pro, tab, h);
-      genere_floor(pro->width, pro->height, pro->etage[pro->nb_etage-1], tab, h);
-      init_tiles(pro, pro->etage[pro->nb_etage-1], pro->nb_etage-1);
-
-      h += 9;
-
-      genere_etage(*pro, tab, h);
-      genere_floor(pro->width, pro->height, pro->etage[pro->nb_etage-1], tab, h);
-      init_tiles(pro, pro->etage[pro->nb_etage-1], pro->nb_etage-1);
-
-      h += 9;
-
-      std::cout << "\nmap bas = " << m << "   map haut = " << m + 1 << std::endl;
-    }
-  pro->sous_bas<<pro->etage[0];
-  pro->bas<<pro->etage[1];
-  pro->haut<<pro->etage[2];
   return GO_ON;
 }

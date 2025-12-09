@@ -1,3 +1,13 @@
+// *****     ***     ***     ***       **       ***      ********************
+// ****  ******  ******  **  *****  *******  *****  *************************
+// ***     ***     ***     ******  *******  *****      **********************
+// **  ******  ******  *** *****  *******  *********  ***********************
+// *     ***  ******  *** ***       ****  *****      ************************
+// 02/12/2025 15:20:41 ******************************************************
+// kenan.guidat <kenan.guidat@debian>
+// - dungeon_master -
+// * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
+
 #include		"donjon_master.hh"
 
 static void		search_tile_me(t_prog		&pro,
@@ -7,21 +17,27 @@ static void		search_tile_me(t_prog		&pro,
 {
   double		d;
   double		mind;
+  Tile			tuil;
 
   cam = pro.me.getPos_cam();
   for (int32_t y = 0; y < pro.height; y ++)
     for (int32_t x = 0; x < pro.width; x ++)
       if (pro.me.check_me_tile(pro.bas.tiles[y*pro.width+x]))
 	{
-	  mind = distance(cam, pro.bas.tiles[y*pro.width+x].getPos(0));
+	  if (pro.bas.tiles[y*pro.width+x].getType() == 1)
+	    tuil = pro.sous_bas.tiles[y*pro.width+x];
+	  else
+	    tuil = pro.bas.tiles[y*pro.width+x];
+	  mind = distance(cam, tuil.getPos(0));
+	  //mind = distance(cam, pro.bas.tiles[y*pro.width+x].getPos(0));
 	  for (int32_t i = 0; i < 9; i ++)
 	    {
-	      d = distance(cam, pro.bas.tiles[y*pro.width+x].getPos(i));
+	      d = distance(cam, tuil.getPos(i));// pro.bas.tiles[y*pro.width+x].getPos(i));
 	      if (mind > d)
 		{
-		  dd = pro.bas.tiles[y*pro.width+x].getPoint(i);
-		  cami = pro.bas.tiles[y*pro.width+x].getPoint(i)+5
-		    < cam.z+4 ? -0.1: pro.bas.tiles[y*pro.width+x].getPoint(i)+5
+		  dd = tuil.getPoint(i);//pro.bas.tiles[y*pro.width+x].getPoint(i);
+		  cami = tuil.getPoint(i)+5//pro.bas.tiles[y*pro.width+x].getPoint(i)+5
+		    < cam.z+4 ? -0.1: tuil.getPoint(i)+5//pro.bas.tiles[y*pro.width+x].getPoint(i)+5
 		      > cam.z+4 ? 0.1 : 0;
 		  mind = d;
 		}

@@ -8,9 +8,7 @@ void			genere_etage(t_prog		&pro,
   Floor			mfloor;
   room			tempFloorroom(0, pro.width, 0, pro.height, 7);
   int32_t		j;
-  int32_t		l;
 
-  l = 0;
   for (int32_t y = 0; y < pro.height; y ++)
     for (int32_t x = 0; x < pro.width; x ++)
       {
@@ -18,7 +16,7 @@ void			genere_etage(t_prog		&pro,
 	mfloor.tiles[y*pro.width+x].setType(1);
       }
 
-  mfloor.subdivide(tempFloorroom, 100);
+  mfloor.subdivide(tempFloorroom, 100, &pro);
   mfloor.create_corridor();
   j = mfloor.rooms.size();
   pro.etage[pro.nb_etage] = mfloor;

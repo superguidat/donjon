@@ -8,18 +8,23 @@
 // - donjon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include "floor.hh"
 #include <lapin.h>
 #include <cstdlib>
+#include	"donjon_master.hh"
 
-bool roomcheck(int roomsize)
+bool roomcheck(int roomsize,t_prog *pro)
 {
   float val;
   val = 225 / roomsize;
   if (val == 0)
     return false;
-  if(rand()%(int)val)
-    return false;
+  if(pro->tab_alea[pro->id_tab_alea]%(int)val)
+    {
+      if ((pro->id_tab_alea += 1) >= (1024*1024))
+	pro->id_tab_alea = 0;
+      return false;
+    }  /*  if(rng()%(int)val)
+    return false;*/
   return true;
 }
 
@@ -60,7 +65,7 @@ int clamp(int		val,
 # define TST(a) a
 #endif
 
-void Floor::subdivide(room parent_room, int max)
+void Floor::subdivide(room parent_room, int max, t_prog	*pro)
 {
   room subdiv1(parent_room.minsize);
   room subdiv2(parent_room.minsize);
@@ -76,7 +81,10 @@ void Floor::subdivide(room parent_room, int max)
     }
 
   // Remplacer ca par un découpage variant entre 25 et 75% de la dimension considéré comme découpable
-  double d = ((rand() % 51) + 25.0) / 100.0;
+  double d = ((pro->tab_alea[pro->id_tab_alea] % 51) + 25.0) / 100.0;
+  if ((pro->id_tab_alea += 1) >= (1024*1024))
+    pro->id_tab_alea = 0;
+  /*double d = ((rng() % 51) + 25.0) / 100.0;*/
   checky = d * (parent_room.corner[3].y - parent_room.corner[0].y);
   checkx = d * (parent_room.corner[3].x - parent_room.corner[0].x);
   // Une dimension découpable doit pouvoir etre découpée, meme si l'autre dimension n'est pas découpable.
@@ -87,7 +95,7 @@ void Floor::subdivide(room parent_room, int max)
     R = 0;
   else
     {
-      // R = rand() % 2 ? 2 : 0;
+      // R = rng() % 2 ? 2 : 0;
       R = 0;
     }
   checky += parent_room.corner[0].y;
@@ -97,29 +105,29 @@ void Floor::subdivide(room parent_room, int max)
       subdiv2 = subdiv1.splitX(parent_room, checkx);
       // Subdivise horizontalement?
 
-      TST(if(roomcheck(roomarea(subdiv1))))
+      TST(if(roomcheck(roomarea(subdiv1), pro)))
 	rooms.push_back(subdiv1);
       TST(else)
-	subdivide(subdiv1, max - 1);
+	subdivide(subdiv1, max - 1, pro);
 
-      TST(if(roomcheck(roomarea(subdiv2))))
+      TST(if(roomcheck(roomarea(subdiv2), pro)))
 	rooms.push_back(subdiv2);
       TST(else)
-	subdivide(subdiv2, max - 1);
+	subdivide(subdiv2, max - 1, pro);
     }
   else
     {
       // Subdivise verticalement?
       subdiv2 = subdiv1.splitY(parent_room, checky);
 
-      TST(if(roomcheck(roomarea(subdiv1))))
+      TST(if(roomcheck(roomarea(subdiv1), pro)))
       rooms.push_back(subdiv1);
       TST(else)
-	subdivide(subdiv1, max - 1);
+	subdivide(subdiv1, max - 1, pro);
 
-      TST(if(roomcheck(roomarea(subdiv2))))
+      TST(if(roomcheck(roomarea(subdiv2), pro)))
 	rooms.push_back(subdiv2);
       TST(else)
-	subdivide(subdiv2, max - 1);
+	subdivide(subdiv2, max - 1, pro);
     }
 }

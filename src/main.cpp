@@ -1,3 +1,13 @@
+// *****     ***     ***     ***       **       ***      ********************
+// ****  ******  ******  **  *****  *******  *****  *************************
+// ***     ***     ***     ******  *******  *****      **********************
+// **  ******  ******  *** *****  *******  *********  ***********************
+// *     ***  ******  *** ***       ****  *****      ************************
+// 02/12/2025 11:58:40 ******************************************************
+// kenan.guidat <kenan.guidat@debian>
+// - dungeon_master -
+// * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
+
 #include	"donjon_master.hh"
 
 extern "C" {
@@ -28,6 +38,7 @@ int		main(int32_t		ac,
   pro->pos.y = 0.5;
   pro->pos.z = 9;
   pro->deb = false;
+  pro->hote = false;
   if (ac > 1)
     {
       if (av[1][0] == 'd')
@@ -36,13 +47,25 @@ int		main(int32_t		ac,
 	  pro->pos.x = 0;
 	  pro->pos.y = 0;
 	  pro->pos.z = 250;
+	  pro->hote = true;
+	}
+      else if (av[1][0] == 'h')
+	{
+	  pro->hote = true;
+	}
+      else
+	{
+	  std::cout << "execute avec : ./dungeon_master h(pour hote ou l'ip pour rejoindre)\n" << std::endl;
+	  strcpy(pro->ip, av[1]);
 	}
     }
-  std::cout << "execute avec : ./dungeon_master d\nPour avoir la vue de haut" << std::endl;
+  else
+    std::cout << "execute avec : ./dungeon_master d\nPour avoir la vue de haut" << std::endl;
   bunny_set_key_response(game_key);
   bunny_set_entering_context_response(game_entering);
   bunny_set_loop_main_function(game_loop);
   bunny_set_display_function(game_display);
+  bunny_set_click_response(game_click);
   bunny_loop(pro->win, 60, pro);
   bunny_stop(pro->win);
   delete pro;
