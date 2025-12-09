@@ -10,7 +10,6 @@
 
 #include		"donjon_master.hh"
 
-
 extern "C"
 t_bunny_response        game_display(t_prog				*prog)
 {
@@ -47,65 +46,27 @@ t_bunny_response        game_display(t_prog				*prog)
       for (int32_t i = 0 ; i < prog->etage[prog->etage_actuel].nb_objets; i ++)
 	{
 	  sf::Time	delta = prog->clock.getElapsedTime();
-	  prog->etage[prog->etage_actuel].objets[i];
+	  double	z;
+
 	  posm.x = prog->bas.tiles[prog->etage[prog->etage_actuel].objets[i].tileID].x + prog->etage[prog->etage_actuel].objets[i].getX();
 	  posm.y = prog->bas.tiles[prog->etage[prog->etage_actuel].objets[i].tileID].y + prog->etage[prog->etage_actuel].objets[i].getY();
-	  posm.z = min_dist_point(prog->bas.tiles[prog->etage[prog->etage_actuel].objets[i].tileID], posm) + 4;
-	  double		z = posm.z;
+	  posm.z = min_dist_point(prog->bas.tiles[prog->etage[prog->etage_actuel].objets[i].tileID], posm) + -((static_cast<int32_t>(prog->bas.max_height/2))+1);
+	  z = posm.z;
 	  posm.z = computeLevitation(delta, z, 2, 1);
 	  if (posm.z < z)
 	    posm.z = z;
 	  draw_cube_texture(0, posm, 1, prog->etage[prog->etage_actuel].objets[i].textID);
 	}
+      draw_joueur(prog);
     }
   if (prog->ecran == 1)
     {
       glClearColor(0.2, 0.2, 0.2, 1.0);
       glClear(GL_COLOR_BUFFER_BIT);
-      t_zposition posz[3];
-      posz[0].x = prog->win->buffer.width-400;
-      posz[0].y = 0;
-      posz[0].z = 0;
-      posz[1].x = prog->win->buffer.width;
-      posz[1].y = 0;
-      posz[1].z = 0;
-      posz[2].x = prog->win->buffer.width-400;
-      posz[2].y = prog->win->buffer.height;
-      posz[2].z = 0;
-      set_triangle_text(posz, prog->textureID[4]);
-      posz[0].x = prog->win->buffer.width;
-      posz[0].y = 0;
-      posz[0].z = 0;
-      posz[1].x = prog->win->buffer.width;
-      posz[1].y = prog->win->buffer.height;
-      posz[1].z = 0;
-      posz[2].x = prog->win->buffer.width-400;
-      posz[2].y = prog->win->buffer.height;
-      posz[2].z = 0;
-      set_triangle_text(posz , prog->textureID[4]);
+      right_panel(prog);
       int32_t sizex = (prog->win->buffer.width - 404) / 20;
-      for (int32_t y = 4; y + sizex < (prog->win->buffer.height); y += sizex+4)
-	{
-	  for (int32_t x = 4; x + sizex < (prog->win->buffer.width-404); x += sizex+4)
-	    {
-	      posm.x = x;
-	      posm.y = y;
-	      posm.z = 0;
-	      t_bunny_position *posa;
-	      posa = (t_bunny_position*)bunny_get_mouse_position();
-	      posa->x = posa->x % prog->win->buffer.width;
-	      posa->y = posa->y % prog->win->buffer.height;
-	      if (posa->x >= posm.x && posa->x <= posm.x+sizex
-		  && posa->y >= posm.y && posa->y <= posm.y+sizex)
-		{
-		  set_carre(posm, *prog, sizex, 1);
-		}
-	      else
-		set_carre(posm, *prog, sizex, 3);
-	    }
-	}
+      case_inventaire(prog, sizex);
     }
-
   bunny_display(prog->win);
   return (GO_ON);
 }

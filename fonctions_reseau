@@ -1,0 +1,38 @@
+UDP:
+UNE SEULE SOCKET POUR TOUT LE MONDE
+
+socket (AF_INET, SOCK_STREAM/SOCK_DGRAM, 0);
+bind
+
+struct sockaddr_in
+
+inet_addr -> d'ip en string a ip en format special
+
+sendto <- ecrire
+recvfrom <- lire
+
+poll
+
+close
+
+
+TCP:
+UNE SOCKET D'ECOUTE, PLEIN DE SOCKETS CLIENTS
+LA SOCKET D'ECOUTE CREE DES CLIENTS EN RETOUR DE ACCEPT
+
+socket (AF_INET, SOCK_STREAM/SOCK_DGRAM, 0);
+bind
+listen -> demande à ecouter sur le port
+accept -> accepte la connexion
+
+struct sockaddr_in
+
+inet_addr -> d'ip en string a ip en format special
+
+send <- ecrire
+recv <- lire
+
+poll <- permet de savoir si on peut lire ou ecrire, sachant que la socket d'écoute ne peut que lire, et lire veut dire pouvoir accept
+
+close
+

@@ -3,27 +3,20 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 04/12/2025 15:29:04 ******************************************************
+// 04/12/2025 13:47:44 ******************************************************
 // kenan.guidat <kenan.guidat@debian>
 // - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include		"tile.hh"
+#include	"donjon_master.hh"
 
-Tile::Tile()
-  : id(0)
-  , x(0)
-  , y(0)
-  , id_room(0)
-  , size(TILE_SIZE)
-  , type(1)
-  , base_height(0)
+bool		check_pos_move(t_prog		&pro,
+			       t_move		&mv,
+			       t_bunny_position	pos)
 {
-  for (int8_t i = 0; i < 9; i++)
-    {
-      pos[i].x = 0;
-      pos[i].y = 0;
-      pos[i].z = 0;
-      points_of_elevation[i] = 0;
-    }
+  return (!collision_collide(pro, mv)
+	  && pos.x >= 0 + (MAX_RAY + MINI_RAY)
+	  && pos.y >= 0 + (MAX_RAY + MINI_RAY)
+	  && pos.x < pro.map->clipable.buffer.width - (MAX_RAY + MINI_RAY)
+	  && pos.y < pro.map->clipable.buffer.height - (MAX_RAY + MINI_RAY));
 }

@@ -20,14 +20,14 @@ void			affiche_3etage(int32_t				x,
        write(1, "  ", 1);*/
       if (!prog->deb)
 	{
-	  soll = t_sol{prog, &prog->haut, x, y, pos, prog->etage_actuel+1};
+	  soll = t_sol{prog, &prog->haut, x, y, pos, (static_cast<int8_t>(prog->etage_actuel+1))};
 	  sol(soll, 1, 1);
 	}
-      soll = t_sol{prog, &prog->bas, x, y, pos, prog->etage_actuel};
+      soll = t_sol{prog, &prog->bas, x, y, pos, (static_cast<int8_t>(prog->etage_actuel))};
       sol(soll, 0, 2);
       if (!prog->deb)
 	{
-	  soll = t_sol{prog, &prog->sous_bas, x, y, pos, prog->etage_actuel-1};
+	  soll = t_sol{prog, &prog->sous_bas, x, y, pos, (static_cast<int8_t>(prog->etage_actuel-1))};
 	  sol(soll, 0, 2);
 	}
     }

@@ -3,27 +3,32 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 04/12/2025 15:29:04 ******************************************************
+// 04/12/2025 13:45:30 ******************************************************
 // kenan.guidat <kenan.guidat@debian>
 // - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include		"tile.hh"
+#include		"donjon_master.hh"
 
-Tile::Tile()
-  : id(0)
-  , x(0)
-  , y(0)
-  , id_room(0)
-  , size(TILE_SIZE)
-  , type(1)
-  , base_height(0)
+int32_t			suit_route(t_bunny_position	&pos,
+				   t_move		&mv,
+				   t_prog		&pro,
+				   t_map		&map)
 {
-  for (int8_t i = 0; i < 9; i++)
+  pos = mv.pnj->getPos();
+  if (mv.pnj->getT() <= 0)
     {
-      pos[i].x = 0;
-      pos[i].y = 0;
-      pos[i].z = 0;
-      points_of_elevation[i] = 0;
+      mv.pnj->setMove_type(1);
+      return 1;
     }
+  init_pos_move(pos, mv);
+
+  if (check_pos_move(pro, mv, pos))
+    {
+      applique_deplacement(pro, mv, map, pos);
+      return 1;
+    }
+  else
+    mv.pnj->setMove_type(1);
+  return 0;
 }

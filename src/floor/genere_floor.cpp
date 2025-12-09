@@ -9,19 +9,20 @@ static void		modifie_z(double		z,
 
   if (tab[i] == 1)
     {
-      write(1, " #", 2);
+      //write(1, " #", 2);
+      flo.tiles[i].setType(10);
       for(int32_t l = 0; l < 9; h[l++] = 9);
     }
   else if (tab[i] == 2)
     {
-      write(1, " _", 2);
+      //write(1, " _", 2);
       for(int32_t l = 0; l < 3; h[l++] = 1);
       for(int32_t l = 3; l < 6; h[l++] = 3);
       for(int32_t l = 6; l < 9; h[l++] = 5);
     }
   else if (tab[i] == 3)
     {
-      write(1, "/ ", 2);
+      //write(1, "/ ", 2);
       for(int32_t l = 0; l < 3; h[l++] = 5);
       for(int32_t l = 3; l < 6; h[l++] = 7);
       for(int32_t l = 6; l < 9; h[l++] = 9);
@@ -29,7 +30,7 @@ static void		modifie_z(double		z,
   else if (tab[i] == 0
 	   || tab[i] == -1)
     {
-      write(1, "  ", 2);
+      //write(1, "  ", 2);
       for(int32_t l = 0; l < 9; h[l++] = 0);
     }
   for (int32_t li = 0; li < 9; li ++)
@@ -53,13 +54,13 @@ void		genere_floor(int32_t		width,
   int32_t	size_coul;
   room		couloir(100);
 
-  std::cout << "largeur de la carte : " << width
-	    << "\nhauteur de la carte : " << height
-	    << std::endl;
+  //std::cout << "largeur de la carte : " << width
+  //	    << "\nhauteur de la carte : " << height
+  //	    << std::endl;
   size_coul = 0;
   for (int32_t y = 0; y < height; y ++)
     {
-      write(1, "\n", 1);
+      //write(1, "\n", 1);
       for (int32_t x = 0; x < width; x ++)
 	{
 	  modifie_z(z, tab, flo, y*width + x);

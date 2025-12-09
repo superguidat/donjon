@@ -3,27 +3,28 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 04/12/2025 15:29:04 ******************************************************
+// 04/12/2025 15:45:26 ******************************************************
 // kenan.guidat <kenan.guidat@debian>
 // - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include		"tile.hh"
+#include		"donjon_master.hh"
 
-Tile::Tile()
-  : id(0)
-  , x(0)
-  , y(0)
-  , id_room(0)
-  , size(TILE_SIZE)
-  , type(1)
-  , base_height(0)
+t_bunny_position	init_check_pos_rec(t_map			&nmap,
+					   t_bunny_position		&destination,
+					   t_bunny_position		&origin,
+					   t_path			&origi)
 {
-  for (int8_t i = 0; i < 9; i++)
+  t_bunny_position	pos1;
+
+  if (nmap.best_pos.x != INT_MAX)
     {
-      pos[i].x = 0;
-      pos[i].y = 0;
-      pos[i].z = 0;
-      points_of_elevation[i] = 0;
+      destination.x = nmap.best_pos.x;
+      destination.y = nmap.best_pos.y;
     }
+      origin.x = origi.pos.x;
+  origin.y = origi.pos.y;
+  pos1.x = destination.x;
+  pos1.y = destination.y;
+  return pos1;
 }

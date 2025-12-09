@@ -3,27 +3,23 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 04/12/2025 15:29:04 ******************************************************
+// 04/12/2025 14:16:28 ******************************************************
 // kenan.guidat <kenan.guidat@debian>
 // - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include		"tile.hh"
+#include	"donjon_master.hh"
 
-Tile::Tile()
-  : id(0)
-  , x(0)
-  , y(0)
-  , id_room(0)
-  , size(TILE_SIZE)
-  , type(1)
-  , base_height(0)
+void		bouge_rec(int32_t				t,
+			  uint8_t				*pos,
+			  t_bunny_position			&origin)
 {
-  for (int8_t i = 0; i < 9; i++)
-    {
-      pos[i].x = 0;
-      pos[i].y = 0;
-      pos[i].z = 0;
-      points_of_elevation[i] = 0;
-    }
+  if (pos[t-1] == 0)
+    origin.x ++;
+  else if (pos[t-1] == 1)
+    origin.y ++;
+  else if (pos[t-1] == 2)
+    origin.x --;
+  else if (pos[t-1] == 3)
+    origin.y --;
 }

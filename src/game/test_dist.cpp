@@ -3,23 +3,22 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 24/10/2025 17:14:04 ******************************************************
-// romain.cescutti <romain.cescutti@jemison.efrits.fr>
-// - donjon_master -
+// 04/12/2025 14:30:51 ******************************************************
+// kenan.guidat <kenan.guidat@debian>
+// - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include "room.hh"
+#include		"donjon_master.hh"
 
-bool room::isMinimal() const
+void			test_dist(t_path		tmp,
+				  t_path		&pat,
+				  t_map			*map)
 {
-  int sizex = corner[3].x - corner[0].x;
-  int sizey = corner[3].y - corner[0].y;
-
-  if (sizex * sizey < (minsize / 4) * (minsize / 4))
-    return (true);
-  if (sizex < minsize)
-    return true;
-  if(sizey < minsize)
-    return true;
-  return false;
+  if (tmp.dist < map->dist)
+    {
+      map->best_pos.x = tmp.pos.x;
+      map->best_pos.y = tmp.pos.y;
+      map->dist = tmp.dist;
+      pat = tmp;
+    }
 }

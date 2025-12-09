@@ -3,27 +3,30 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 04/12/2025 15:29:04 ******************************************************
+// 04/12/2025 13:52:53 ******************************************************
 // kenan.guidat <kenan.guidat@debian>
 // - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include		"tile.hh"
+#include		"donjon_master.hh"
 
-Tile::Tile()
-  : id(0)
-  , x(0)
-  , y(0)
-  , id_room(0)
-  , size(TILE_SIZE)
-  , type(1)
-  , base_height(0)
+void			set_carre_pix(t_bunny_pixelarray	*map2,
+				      ef::Unit		&pnj,
+				      uint32_t		i)
 {
-  for (int8_t i = 0; i < 9; i++)
+  int16_t		x;
+  int16_t		y;
+  int16_t		r;
+
+  x = pnj.getX();
+  y = pnj.getY();
+  r = pnj.getR();
+
+  for (int16_t y2 = y - r; y2 < y + r; y2 ++)
     {
-      pos[i].x = 0;
-      pos[i].y = 0;
-      pos[i].z = 0;
-      points_of_elevation[i] = 0;
+      for (int16_t x2 = x - r; x2 < x + r; x2 ++)
+	{
+	  ((uint32_t *)(map2->pixels))[y2 * map2->clipable.buffer.width + x2] = i;
+	}
     }
 }

@@ -3,29 +3,27 @@
 // ***     ***     ***     ******  *******  *****      **********************
 // **  ******  ******  *** *****  *******  *********  ***********************
 // *     ***  ******  *** ***       ****  *****      ************************
-// 17/11/2025 13:34:13 ******************************************************
+// 03/12/2025 16:34:36 ******************************************************
 // kenan.guidat <kenan.guidat@debian>
 // - dungeon_master -
 // * *** * * ***  ** * ** ** ** ** * * * *** * **  **************************
 
-#include	"donjon_master.hh"
+#include		"donjon_master.hh"
 
-double		min_dist_point(Tile		&tuil,
-			       t_zposition	&cam)
+void			rattrape_retard(t_prog		*prog)
 {
-  double	mind;
-  double	d;
-  double	z;
+  int32_t		r;
+  int64_t		li;
 
-  mind = distance(cam, tuil.getPos(0));
-  for (int32_t i = 0; i < 9; i ++)
+  li = 0;
+  while (prog->file.size())
     {
-      d = distance(cam, tuil.getPos(i));
-      if (mind > d)
+      r  = send(prog->client_fd[prog->file[0].sock_id].fd, &prog->file[0], sizeof(t_reseau), 0);
+      if (errno == EWOULDBLOCK || errno == EAGAIN || r < (static_cast<int32_t>(sizeof(t_reseau))))
 	{
-	  z = tuil.getPoint(i);
-	  mind = d;
+	  li ++;
+	  continue ;
 	}
+      prog->file.erase(prog->file.begin() + li);
     }
-  return z;
 }
