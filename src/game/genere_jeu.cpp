@@ -18,7 +18,7 @@ void			genere_jeu(t_prog		*pro,
   int32_t		h;
 
   h = 0;
-  for (int32_t m = 0; m < nb_etage; m ++)
+  for (int32_t m = 0; m < 1; m ++)
     {
       //      for (int32_t y = 0; y < pro->map->clipable.buffer.height; y ++)
 	//	for (int32_t x = 0; x < pro->map->clipable.buffer.width; x ++)
@@ -36,7 +36,6 @@ void			genere_jeu(t_prog		*pro,
       init_tiles(pro, pro->etage[pro->nb_etage-1], pro->nb_etage-1);
 
       h += hauteur_sous_plafond;
-
       //std::cout << "\nmap bas = " << m << "   map haut = " << m + 1 << std::endl;
     }
   pro->sous_bas<<pro->etage[0];

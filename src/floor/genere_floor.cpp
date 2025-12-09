@@ -37,10 +37,6 @@ static void		modifie_z(double		z,
     }
   for (int32_t li = 0; li < 9; li ++)
     {
-      if (0)
-	flo.tiles[i].setType(1);
-      else
-	flo.tiles[i].setType(0);
       flo.tiles[i].setPoint(li, z+h[li]);
     }
   flo.tiles[i].setBase_height(z);
@@ -62,7 +58,7 @@ void		genere_floor(int32_t		width,
   size_coul = 0;
   for (int32_t y = 0; y < height; y ++)
     {
-      //write(1, "\n", 1);
+      write(1, "\n", 1);
       for (int32_t x = 0; x < width; x ++)
 	{
 	  modifie_z(z,flo, y*width + x);

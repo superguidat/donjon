@@ -15,7 +15,7 @@
 #include "tile.hh"
 #include <vector>
 
-#define			SIZE_COULOIR	1
+#define			SIZE_COULOIR	0
 
 class Tile;
 
@@ -39,7 +39,7 @@ class room
   void			operator=(const room		&other);
   bool			operator==(const room		&other) const;
 
-  void			create(int32_t			*tab,
+  void			create(Tile			*tab,
 			       t_bunny_position		*Rcorner,
 			       double			base_height,
 			       int32_t			width);

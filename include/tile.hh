@@ -98,7 +98,6 @@ class Tile
   int32_t		id_room;
   int32_t		size;
   int32_t		type;
-  double		base_height;
 };
 
 void                    limit_gravity(double    &posz,

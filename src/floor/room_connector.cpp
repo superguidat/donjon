@@ -11,7 +11,7 @@
 #include "floor.hh"
 #include "room.hh"
 
-void Floor::room_connector(room mainroom)
+void Floor::room_connector(room &mainroom)
 {
   room *neighbour;
   int i,j,k,x1,y1,x2,y2,turnpoint;
@@ -94,13 +94,13 @@ void Floor::room_connector(room mainroom)
   i++;
 }
 
-int Floor::room_finder(room mainroom)
+int Floor::room_finder(room &mainroom)
 {
   room neighbour;
   int x;
   int y;
   int i;
-  int score;
+  int score = 0;
 
   i = 0;
   x = mainroom.corner[0].x;
